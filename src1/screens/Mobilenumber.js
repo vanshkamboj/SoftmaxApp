@@ -10,7 +10,6 @@ export default class Mobilenumber extends Component {
                 <View style={styles.topContainer}></View>
                 {/* <View style={styles.bottomContainer}></View> */}
                 <View style={styles.centerContainer}>
-
                 </View>
             </View>
         )

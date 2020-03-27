@@ -15,7 +15,7 @@ export default class HomeScreen extends Component {
     render() {
         return (
             <NavigationContainer>
-                <Drawer.Navigator initialRouteName="app">
+                <Drawer.Navigator initialRouteName="Demo">
                     {/* <Drawer.Screen name="Home" component={HomeScreen} /> */}
                     <Drawer.Screen name="app" component={App} />
                     <Drawer.Screen name="Logout" component={Mobilenumber} />
