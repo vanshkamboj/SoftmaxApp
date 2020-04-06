@@ -13,14 +13,24 @@ import {
 } from "react-native"
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Actions } from 'react-native-router-flux'
+import { connect } from 'react-redux';
+import {
+    otpChanged,
+    otpVerification
+} from "../actions"
+import Loading from "../components/loading"
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
 
 
 class Otp extends Component {
+    componentDidMount() {
+        this.props.otpChanged(null)
+    }
     render() {
         let color = '#2a017d'
+        let { otp, confirmResult } = this.props
         // changeNavigationBarColor(color)
         // hideNavigationBar()
         return (
@@ -95,7 +105,12 @@ class Otp extends Component {
                                         keyboardType='number-pad'
                                         maxLength={1}
                                         onChangeText={value => {
+                                            this.props.otpChanged(otp + value * 10000)
+                                            // this.setState({ otp: this.state.otp + value * 10000 })
                                             if (value) this.refs.input_2.focus(); //for go to next input text
+                                            if (value.length === 0) {
+                                                this.props.otpChanged(0)
+                                            }
                                         }}
                                     />
                                     <TextInput
@@ -111,9 +126,12 @@ class Otp extends Component {
                                         keyboardType='number-pad'
                                         maxLength={1}
                                         onChangeText={value => {
+                                            this.props.otpChanged(otp + value * 1000)
+                                            // this.setState({ otp: this.state.otp + value * 1000 })
                                             if (value) this.refs.input_3.focus(); //for go to next input text
                                             if (value.length === 0) {
                                                 this.refs.input_1.focus()
+                                                this.props.otpChanged(otp - otp % 100000)
                                             }
                                         }}
                                     />
@@ -130,9 +148,12 @@ class Otp extends Component {
                                         keyboardType='number-pad'
                                         maxLength={1}
                                         onChangeText={value => {
+                                            this.props.otpChanged(otp + value * 100)
+                                            // this.setState({ otp: this.state.otp + value * 100 })
                                             if (value) this.refs.input_4.focus(); //for go to next input text
                                             if (value.length === 0) {
                                                 this.refs.input_2.focus()
+                                                this.props.otpChanged(otp - otp % 10000)
                                             }
                                         }}
                                     />
@@ -149,9 +170,12 @@ class Otp extends Component {
                                         keyboardType='number-pad'
                                         maxLength={1}
                                         onChangeText={value => {
+                                            this.props.otpChanged(otp + value * 10)
+                                            // this.setState({ otp: this.state.otp + value * 10 })
                                             if (value) this.refs.input_5.focus(); //for go to next input text
                                             if (value.length === 0) {
                                                 this.refs.input_3.focus()
+                                                this.props.otpChanged(otp - otp % 1000)
                                             }
                                         }}
                                     />
@@ -168,9 +192,12 @@ class Otp extends Component {
                                         keyboardType='number-pad'
                                         maxLength={1}
                                         onChangeText={value => {
+                                            this.props.otpChanged(otp + value * 1)
+                                            // this.setState({ otp: this.state.otp + value * 1 })
                                             if (value) this.refs.input_6.focus(); //for go to next input text
                                             if (value.length === 0) {
                                                 this.refs.input_4.focus()
+                                                this.props.otpChanged(otp - otp % 100)
                                             }
                                         }}
                                     />
@@ -188,9 +215,12 @@ class Otp extends Component {
                                         maxLength={1}
                                         // onKeyPress={this.refs.input_5.focus()}
                                         onChangeText={value => {
+                                            this.props.otpChanged(otp + value)
+                                            // this.setState({ otp: this.state.otp + value })
                                             // if (value) this.refs.input_2.focus(); //for go to next input text
                                             if (value.length === 0) {
                                                 this.refs.input_5.focus()
+                                                this.props.otpChanged(otp - otp % 10)
                                             }
                                         }}
                                     />
@@ -208,6 +238,7 @@ class Otp extends Component {
                                         flexDirection: 'row',
                                         paddingHorizontal: 30
                                     }, styles.radiusBorder]}
+                                    onPress={() => this.props.otpVerification(confirmResult, otp)}
                                 >
                                     <Text style={{ fontWeight: 'bold' }}>SUBMIT</Text>
                                     <Image
@@ -234,6 +265,10 @@ class Otp extends Component {
                                 </View>
                             </View>
                         </View>
+                        <View>
+                            {this.props.isLoading ? <Loading /> : null}
+
+                        </View>
                     </View>
                 </KeyboardAwareScrollView>
             </TouchableWithoutFeedback>
@@ -249,5 +284,16 @@ const styles = StyleSheet.create({
 
     }
 })
-
-export default Otp
+const mapStateTOProps = state => {
+    // console.log(state)
+    return {
+        number: state.auth.mobileNumber,
+        otp: state.auth.otp,
+        sLoading: state.auth.isLoading,
+        confirmResult: state.auth.confirmResult
+    }
+}
+export default connect(mapStateTOProps, {
+    otpChanged,
+    otpVerification
+})(Otp)
