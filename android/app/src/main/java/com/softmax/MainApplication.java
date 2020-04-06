@@ -1,4 +1,4 @@
-package com.softmax;
+package com.softmax.vansh.myapplication;
 
 import android.app.Application;
 import android.content.Context;

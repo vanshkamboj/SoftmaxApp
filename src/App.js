@@ -9,10 +9,9 @@ import {
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import reducers from './reducers'
-import Login from "../redux/signIn"
 import Router from "./Router"
 import ReduxThunk from 'redux-thunk'
-const NoteApp = () => {
+const Softmax = () => {
     const store = createStore(reducers, {}, applyMiddleware(ReduxThunk))
     return (
         <Provider store={store}>
@@ -21,4 +20,4 @@ const NoteApp = () => {
     )
 }
 
-export default NoteApp
+export default Softmax

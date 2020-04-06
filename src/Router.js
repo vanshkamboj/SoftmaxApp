@@ -1,15 +1,15 @@
 import React from "react"
 import { Scene, Router } from 'react-native-router-flux'
 // import { Scene, Router } from 'react-router-flux'
-import Signin from './signIn'
-import Deshboard from '../screens/deshboard'
-import SignUp from './signUp'
+import Signin from './screens/signIn'
+import otp from './screens/otp'
+// import SignUp from './signUp'
 import { StyleSheet, View, TouchableOpacity } from "react-native"
-import NotesListShow from '../screens/NotesListShow'
-import addNote from '../screens/addNote'
-import addLocation from '../screens/addLocation'
-import addImage from '../screens/addImage'
-import Icon from 'react-native-vector-icons/Entypo';
+// import NotesListShow from '../screens/NotesListShow'
+// import addNote from '../screens/addNote'
+// import addLocation from '../screens/addLocation'
+// import addImage from '../screens/addImage'
+// import Icon from 'react-native-vector-icons/Entypo';
 // import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
@@ -27,12 +27,12 @@ const RouerComponent = () => {
                         // renderRightButton={InboxIcon}
                         hideNavBar={true}
                     />
-                    <Scene key="signUp" component={SignUp}
+                    <Scene key="otp" component={otp}
                         hideNavBar={true}
                     />
                 </Scene>
-                <Scene key='main'>
-                    <Scene key='deshboard' component={Deshboard}
+                {/* <Scene key='main'> */}
+                {/* <Scene key='deshboard' component={Deshboard}
                         hideNavBar={true}
 
                         // title='Deshboard'
@@ -52,9 +52,9 @@ const RouerComponent = () => {
                     />
                     <Scene key="addLocation" component={addLocation}
                         hideNavBar={true}
-                    />
+                    /> */}
 
-                </Scene>
+                {/* </Scene> */}
             </Scene>
         </Router>
 

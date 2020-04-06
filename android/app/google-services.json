@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "232824403070",
+    "firebase_url": "https://softmax-224513.firebaseio.com",
+    "project_id": "softmax-224513",
+    "storage_bucket": "softmax-224513.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:232824403070:android:13208976c0794db023d42f",
+        "android_client_info": {
+          "package_name": "com.softmax.vansh.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "232824403070-jnv3bkgiv6h0kp8kg99dprqb714e4f08.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.softmax.vansh.myapplication",
+            "certificate_hash": "b4ff868e608e52996a40fd555e479bf4b764fe0a"
+          }
+        },
+        {
+          "client_id": "232824403070-ibfj26ukco71r70q9aeignf0m0iobojn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFy1qQu0y9Xy8nMx4nKkj6iL7yaH3HY2c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "232824403070-ibfj26ukco71r70q9aeignf0m0iobojn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

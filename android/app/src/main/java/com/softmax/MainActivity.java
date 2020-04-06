@@ -1,4 +1,4 @@
-package com.softmax;
+package com.softmax.vansh.myapplication;
 
 import com.facebook.react.ReactActivity;
 
