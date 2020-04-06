@@ -128,7 +128,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.softmax.vansh.myapplication"
+        applicationId "com.vansh.softmax"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -185,6 +185,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha02'
     implementation 'com.google.firebase:firebase-analytics:17.2.2'
+    implementation "com.google.firebase:firebase-auth:17.0.0"
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";

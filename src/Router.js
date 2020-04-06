@@ -3,6 +3,7 @@ import { Scene, Router } from 'react-native-router-flux'
 // import { Scene, Router } from 'react-router-flux'
 import Signin from './screens/signIn'
 import otp from './screens/otp'
+import Home from "./screens/HomeScreen"
 // import SignUp from './signUp'
 import { StyleSheet, View, TouchableOpacity } from "react-native"
 // import NotesListShow from '../screens/NotesListShow'
@@ -22,8 +23,13 @@ const RouerComponent = () => {
         >
             <Scene key="root" hideNavBar>
                 <Scene key="auth">
-                    <Scene key="login" component={Signin}
+                    <Scene key="Home" component={Home}
                         initial
+                        // renderRightButton={InboxIcon}
+                        hideNavBar={true}
+                    />
+                    <Scene key="login" component={Signin}
+                        // initial
                         // renderRightButton={InboxIcon}
                         hideNavBar={true}
                     />

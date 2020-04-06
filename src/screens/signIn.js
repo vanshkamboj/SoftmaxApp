@@ -19,12 +19,10 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { Actions } from 'react-native-router-flux'
 import { connect } from 'react-redux';
 import {
-    emailChanged,
-    passwordChanged,
-    logInUser,
-    onLoginOrRegisterGoogle,
-    onLoginOrRegisterFacebook
+    numberChanged,
+    logInUser
 } from "../actions"
+import Loading from "../components/loading"
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
 
@@ -78,6 +76,8 @@ class signIn extends Component {
                                     color: 'white'
                                 }, styles.radiusBorder]}
                                 keyboardType='number-pad'
+                                value={this.props.number}
+                                onChangeText={(number) => this.props.numberChanged(number)}
                             />
                             <TouchableOpacity
                                 style={[{
@@ -90,7 +90,7 @@ class signIn extends Component {
                                     flexDirection: 'row',
                                     paddingHorizontal: 30
                                 }, styles.radiusBorder]}
-                                onPress={() => Actions.otp()}
+                                onPress={() => this.props.logInUser(this.props.number)}
                             >
                                 <Text style={{ fontWeight: 'bold' }}>LOGIN</Text>
                                 <Image
@@ -103,6 +103,10 @@ class signIn extends Component {
                                     }}
                                 />
                             </TouchableOpacity>
+                        </View>
+                        <View>
+                            {this.props.isLoading ? <Loading /> : null}
+
                         </View>
                     </View>
                 </KeyboardAwareScrollView>
@@ -123,16 +127,11 @@ const styles = StyleSheet.create({
 const mapStateTOProps = state => {
     // console.log(state)
     return {
-        email: state.auth.email,
-        pass: state.auth.pass,
-        isLoading: state.auth.isLoading,
-        isLogin: state.auth.isLogin
+        number: state.auth.mobileNumber,
+        isLoading: state.auth.isLoading
     }
 }
 export default connect(mapStateTOProps, {
-    emailChanged,
-    passwordChanged,
-    logInUser,
-    onLoginOrRegisterGoogle,
-    onLoginOrRegisterFacebook
+    numberChanged,
+    logInUser
 })(signIn)
