@@ -27,6 +27,7 @@ class ViewBook extends Component {
         this.setState({ visible: false });
     }
     render() {
+        // alert(this.props.uri)
         let { userArr } = this.props
         let color = '#2a017d'
         return (
@@ -41,7 +42,7 @@ class ViewBook extends Component {
                     }}>
                         <Text style={{ color: 'white', fontSize: 20 }}>E_Learning</Text>
                         <TouchableOpacity
-                            onPress={() => Actions.E_learning()}
+                            onPress={() => Actions.BooksSubject()}
                             style={{
                                 position: 'absolute',
                                 left: 10
