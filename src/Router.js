@@ -6,14 +6,12 @@ import otp from './screens/otp'
 import Home from "./screens/HomeScreen"
 // import SignUp from './signUp'
 import { StyleSheet, View, TouchableOpacity } from "react-native"
-// import NotesListShow from '../screens/NotesListShow'
-// import addNote from '../screens/addNote'
-// import addLocation from '../screens/addLocation'
-// import addImage from '../screens/addImage'
-// import Icon from 'react-native-vector-icons/Entypo';
-// import Ionicons from 'react-native-vector-icons/Ionicons';
-
-
+import OnlineVideo from './screens/OnlineVideos'
+import E_learning from './screens/E_learning'
+import Books from './screens/Books'
+import BooksSubject from './screens/BooksSubject'
+import OnlineTest from './screens/OnlineTest'
+import ViewBook from './screens/ViewBook'
 const RouerComponent = () => {
     return (
         <Router
@@ -34,6 +32,24 @@ const RouerComponent = () => {
                         hideNavBar={true}
                     />
                     <Scene key="otp" component={otp}
+                        hideNavBar={true}
+                    />
+                    <Scene key="video" component={OnlineVideo}
+                        hideNavBar={true}
+                    />
+                    <Scene key="E_learning" component={E_learning}
+                        hideNavBar={true}
+                    />
+                    <Scene key="Books" component={Books}
+                        hideNavBar={true}
+                    />
+                    <Scene key="test" component={OnlineTest}
+                        hideNavBar={true}
+                    />
+                    <Scene key="BooksSubject" component={BooksSubject}
+                        hideNavBar={true}
+                    />
+                    <Scene key="ViewBook" component={ViewBook}
                         hideNavBar={true}
                     />
                 </Scene>
