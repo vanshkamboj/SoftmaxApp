@@ -19,8 +19,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { Actions } from 'react-native-router-flux'
 import { connect } from 'react-redux';
 import {
-    numberChanged,
-    logInUser
+    getProfile
 } from "../actions"
 import Loading from "../components/loading"
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -28,18 +27,24 @@ const screenHeight = Math.round(Dimensions.get('window').height);
 
 class DeshBoard extends Component {
     componentDidMount() {
+        changeNavigationBarColor('#2a017d')
         // this.props.otpChanged(null)
+        if (this.props.userArr == null)
+            this.props.getProfile()
     }
     render() {
+        // console.log(this.props.userArr[0].school_name)
         let color = '#2a017d'
-        let { otp, confirmResult } = this.props
+        let { userArr } = this.props
         // changeNavigationBarColor(color)
         // hideNavigationBar()
+        // console.log(userArr)
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <KeyboardAwareScrollView
                 // style={{ flex: 1 }}
                 >
+                    < StatusBar backgroundColor={color} barStyle='light-content' />
                     <View style={{ flex: 1, height: screenHeight }}>
                         <View style={{ flex: 2, backgroundColor: color }}>
                             <View style={{
@@ -50,14 +55,14 @@ class DeshBoard extends Component {
                             }}>
                                 <Text style={{ color: 'white', fontSize: 20 }}>Home</Text>
                                 <TouchableOpacity
-                                    onPress={() => Actions.login()}
+                                    // onPress={() => Actions.login()}
                                     style={{
                                         position: 'absolute',
                                         right: 5
                                     }}
                                 >
                                     <Image
-                                        source={require('../images/leftArrow.png')}
+                                        source={require('../images/options.png')}
                                         style={{
                                             height: 30,
                                             width: 30,
@@ -75,19 +80,183 @@ class DeshBoard extends Component {
                                             width: 100,
                                             margin: 10,
                                             resizeMode: 'contain',
-                                            borderWidth: 1,
-                                            borderColor: 'red'
                                         }}
                                     />
                                 </View>
                                 <View style={{ marginLeft: 10 }}>
-                                    <Text style={{ color: 'white', fontSize: 25 }}>School Name</Text>
-                                    <Text style={{ color: 'white', fontSize: 18 }}>Student Name</Text>
-                                    <Text style={{ color: 'white', fontSize: 18 }}>Class Name</Text>
+                                    <Text style={{ color: 'white', fontSize: 25, width: screenHeight / 3 }}>
+                                        {this.props.userArr !== null ? userArr[0].school_name : null}
+
+                                    </Text>
+                                    <Text style={{ color: '#e0ae16', fontSize: 18, width: screenHeight / 3 }}>
+                                        {this.props.userArr !== null ? userArr[0].student_name : null}
+                                        {/* {userArr[0].student_name} */}
+                                    </Text>
+                                    <Text style={{ color: '#e0ae16', fontSize: 18, width: screenHeight / 3 }}>
+                                        {this.props.userArr !== null ? userArr[0].class : null}
+                                        {/* {userArr[0].class} */}
+                                    </Text>
                                 </View>
                             </View>
                         </View>
-                        <View style={{ flex: 5, }}>
+                        <View style={{
+                            flex: 5,
+                            backgroundColor: 'white',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                        }}>
+                            <View style={{ flexDirection: 'row' }} >
+                                <TouchableOpacity
+                                    style={styles.cards}
+                                >
+                                    <Image
+                                        source={require('../images/book.png')}
+                                        style={{
+                                            height: 50,
+                                            width: 50,
+                                            margin: 10,
+                                            resizeMode: 'contain',
+                                        }}
+                                    />
+                                    <Text style={{ fontWeight: 'bold' }}>Dairy</Text>
+
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={styles.cards}
+                                >
+                                    <Image
+                                        source={require('../images/attendance.png')}
+                                        style={{
+                                            height: 50,
+                                            width: 50,
+                                            margin: 10,
+                                            resizeMode: 'contain',
+
+                                        }}
+                                    />
+                                    <Text style={{ fontWeight: 'bold' }}>Attendance</Text>
+
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={styles.cards}
+                                >
+                                    <Image
+                                        source={require('../images/gallery.png')}
+                                        style={{
+                                            height: 50,
+                                            width: 50,
+                                            margin: 10,
+                                            resizeMode: 'contain',
+
+                                        }}
+                                    />
+                                    <Text style={{ fontWeight: 'bold' }}>Gallary</Text>
+
+                                </TouchableOpacity>
+                            </View>
+                            <View style={{ flexDirection: 'row' }} >
+                                <TouchableOpacity
+                                    style={styles.cards}
+                                >
+                                    <Image
+                                        source={require('../images/statement.png')}
+                                        style={{
+                                            height: 50,
+                                            width: 50,
+                                            margin: 10,
+                                            resizeMode: 'contain',
+                                        }}
+                                    />
+                                    <Text style={{ fontWeight: 'bold' }}>Report Crad</Text>
+
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={styles.cards}
+                                >
+                                    <Image
+                                        source={require('../images/book.png')}
+                                        style={{
+                                            height: 50,
+                                            width: 50,
+                                            margin: 10,
+                                            resizeMode: 'contain',
+
+                                        }}
+                                    />
+                                    <Text style={{ fontWeight: 'bold' }}>Dairy Pics</Text>
+
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={styles.cards}
+                                >
+                                    <Image
+                                        source={require('../images/syllabus.png')}
+                                        style={{
+                                            height: 50,
+                                            width: 50,
+                                            margin: 10,
+                                            resizeMode: 'contain',
+
+                                        }}
+                                    />
+                                    <Text style={{ fontWeight: 'bold' }}>Syllabus</Text>
+
+                                </TouchableOpacity>
+                            </View>
+                            <View style={{ flexDirection: 'row' }} >
+                                <TouchableOpacity
+                                    style={styles.cards}
+                                >
+                                    <Image
+                                        source={require('../images/test.png')}
+                                        style={{
+                                            height: 50,
+                                            width: 50,
+                                            margin: 10,
+                                            resizeMode: 'contain',
+
+                                        }}
+                                    />
+                                    <Text style={{ fontWeight: 'bold' }}>Marks</Text>
+
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={styles.cards}
+                                >
+                                    <Image
+                                        source={require('../images/notice.png')}
+                                        style={{
+                                            height: 50,
+                                            width: 50,
+                                            margin: 10,
+                                            resizeMode: 'contain',
+
+                                        }}
+                                    />
+                                    <Text style={{ fontWeight: 'bold' }}>Notice Board</Text>
+
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={styles.cards}
+                                >
+                                    <Image
+                                        source={require('../images/clipboard.png')}
+                                        style={{
+                                            height: 50,
+                                            width: 50,
+                                            margin: 10,
+                                            resizeMode: 'contain',
+
+                                        }}
+                                    />
+                                    <Text style={{ fontWeight: 'bold' }}>Time Table</Text>
+
+                                </TouchableOpacity>
+                            </View>
+
+
+
+
 
                         </View>
                         <View>
@@ -100,11 +269,17 @@ class DeshBoard extends Component {
     }
 }
 const styles = StyleSheet.create({
-    radiusBorder: {
+    cards: {
         borderBottomLeftRadius: 10,
         borderBottomRightRadius: 10,
         borderTopLeftRadius: 10,
-        borderTopRightRadius: 10
+        borderTopRightRadius: 10,
+        backgroundColor: '#e6e1e1',
+        width: screenWidth / 3.5,
+        height: screenHeight / 7,
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: 2
 
     }
 })
@@ -113,10 +288,10 @@ const mapStateTOProps = state => {
     // console.log(state)
     return {
         number: state.auth.mobileNumber,
-        isLoading: state.auth.isLoading
+        isLoading: state.auth.isLoading,
+        userArr: state.auth.userArr
     }
 }
 export default connect(mapStateTOProps, {
-    numberChanged,
-    logInUser
+    getProfile
 })(DeshBoard)

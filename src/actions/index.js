@@ -5,7 +5,12 @@ import {
     LOGIN_USER_FAIL,
     MODELSHOW,
     OTP_CHANGED,
-    CONFIRM_MOBILE
+    CONFIRM_MOBILE,
+    GET_USER_DATA,
+    GET_BOOKS,
+    BOOKS_COUNT,
+    BOOKS_SUBJECT,
+    BOOKS_SUBJECT_COUNT
 } from "./types"
 import firebase from 'react-native-firebase'
 // import auth from '@react-native-firebase/auth'
@@ -102,3 +107,86 @@ export const loading = (task) => {
         payload: task
     }
 }
+
+export const getProfile = () => {
+    return (dispatch) => {
+        dispatch({ type: LOADING, payload: true })
+        fetch("https://softmax.info/getprofile2.php?id=" + 13024 + "&mobile=" + 7017165652)
+            .then((response) => response.json())
+            .then((userInfo) => {
+                // return (dispatch) => {
+                // console.log(userInfo)
+                dispatch({ type: GET_USER_DATA, payload: userInfo })
+                dispatch({ type: LOADING, payload: false })
+                // }
+            })
+            .catch((error) => {
+                console.error(error);
+                alert(error)
+            });
+
+    }
+}
+export const getBooks = (clas, medium) => {
+    return (dispatch) => {
+        dispatch({ type: LOADING, payload: true })
+        fetch("https://softmax.info/get_ebook_sub.php?medium=" + medium + "&class=" + clas)
+            .then((response) => response.json())
+            .then((Books) => {
+                // return (dispatch) => {
+                // console.log(Books)
+                dispatch({ type: GET_BOOKS, payload: Books })
+                let key, count = 0
+                for (key in Books) {
+                    if (Books.hasOwnProperty(key)) {
+                        count++
+                    }
+                }
+                dispatch({ type: BOOKS_COUNT, payload: count })
+                dispatch({ type: LOADING, payload: false })
+                // }
+            })
+            .catch((error) => {
+                console.error(error);
+                alert(error)
+            });
+
+    }
+}
+
+
+export const getBooksSubject = (clas, medium, subject) => {
+    return (dispatch) => {
+        dispatch({ type: LOADING, payload: true })
+        fetch("https://softmax.info/get_ebook.php?class_name=" + clas + "&medium=" + medium + "&subject=" + subject)
+            .then((response) => response.json())
+            .then((Books) => {
+                // return (dispatch) => {
+                // console.log(Books)
+                dispatch({ type: BOOKS_SUBJECT, payload: Books })
+                let key, count = 0
+                for (key in Books) {
+                    if (Books.hasOwnProperty(key)) {
+                        count++
+                    }
+                }
+                dispatch({ type: BOOKS_SUBJECT_COUNT, payload: count })
+                dispatch({ type: LOADING, payload: false })
+                // }
+            })
+            .catch((error) => {
+                console.error(error);
+                alert(error)
+            });
+
+    }
+}
+
+// String urladdress = "https://softmax.info/getprofile2.php?id="+value+"&mobile="+school_n;
+// URL url = new URL("https://softmax.info/uploaded/"+school+"/Photos/"+rollnum+".jpg");
+
+// webview.loadUrl("https://softmax.info/Schools/"+school+"/"+clas+".php");
+
+// String urladdress = "https://softmax.info/get_ebook_sub.php?medium="+medium+"&class="+clas;
+
+// String urladdress = "https://softmax.info/get_ebook.php?class_name="+value+"&medium="+medium+"&subject="+subject;

@@ -6,6 +6,8 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import DeshBoard from './DeshBoard'
+import Elearning from './E_learning'
+import profile from './StudentProfile';
 
 // const Drawer = createDrawerNavigator();
 
@@ -122,8 +124,8 @@ export default class HomeScreen extends Component {
                     }}
                 >
                     <Tab.Screen name="Home" component={DeshBoard} />
-                    <Tab.Screen name="E-Learning" component={SettingsScreen} />
-                    <Tab.Screen name="Profile" component={SettingsScreen2} />
+                    <Tab.Screen name="E-Learning" component={Elearning} />
+                    <Tab.Screen name="Profile" component={profile} />
                 </Tab.Navigator>
             </NavigationContainer>
         )
