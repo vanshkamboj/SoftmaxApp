@@ -23,6 +23,8 @@ class BooksSubject extends Component {
     // }
     componentDidMount() {
         let { userArr } = this.props
+        console.log("-----------------------------------------------")
+        console.log(this.props.BooksSubject)
         // if (this.props.BooksSubject == null)
         // this.props.getBooks(userArr[0].class, userArr[0].medium)
         this.props.getBooksSubject(userArr[0].class, userArr[0].medium, this.props.subject)
@@ -83,8 +85,9 @@ class BooksSubject extends Component {
                         // numColumns={2}
                         renderItem={({ item, index }) =>
                             <BooksList
-                                subject={item.subject}
-                                onSubjectSelect={() => Actions.ViewBook({ uri: item.uri })}
+                                subject={item.chapter}
+                                onSubjectSelect={() => Actions.ViewBook({ uri: item.url })}
+                            // onSubjectSelect={() => alert(item.url)}
                             />
                         }
                         keyExtractor={(index, item) => index + item}
