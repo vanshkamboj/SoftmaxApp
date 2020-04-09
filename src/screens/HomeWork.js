@@ -5,9 +5,9 @@ import {
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import DeshBoard from './DeshBoard'
-import Elearning from './E_learning'
-import profile from './StudentProfile';
+import homeWork from './ShowHomeWork'
+import Dairy from './DairyPics'
+// import profile from './StudentProfile';
 
 // const Drawer = createDrawerNavigator();
 
@@ -53,14 +53,14 @@ function HomeIconWithBadge(props) {
 }
 
 const Tab = createBottomTabNavigator();
-export default class HomeScreen extends Component {
+export default class HomeWork extends Component {
     render() {
         return (
             <NavigationContainer>
                 <Tab.Navigator
                     screenOptions={({ route }) => ({
                         tabBarIcon: ({ focused, color, size }) => {
-                            if (route.name === 'Home') {
+                            if (route.name === 'HomeWork') {
                                 return (
                                     <HomeIconWithBadge
                                         name={
@@ -72,22 +72,10 @@ export default class HomeScreen extends Component {
                                         color={color}
                                     />
                                 );
-                            } else if (route.name === 'E-Learning') {
+                            } else if (route.name === 'Dairy') {
                                 return (
                                     <Image
-                                        source={require('../images/e-learning.png')}
-                                        style={{
-                                            height: 30,
-                                            width: 30,
-                                            // position: 'absolute',
-                                            // right: 20
-                                        }}
-                                    />
-                                );
-                            } else if (route.name === 'Profile') {
-                                return (
-                                    <Image
-                                        source={require('../images/user.png')}
+                                        source={require('../images/book.png')}
                                         style={{
                                             height: 30,
                                             width: 30,
@@ -104,9 +92,9 @@ export default class HomeScreen extends Component {
                         inactiveTintColor: 'gray',
                     }}
                 >
-                    <Tab.Screen name="Home" component={DeshBoard} />
-                    <Tab.Screen name="E-Learning" component={Elearning} />
-                    <Tab.Screen name="Profile" component={profile} />
+                    <Tab.Screen name="HomeWork" component={homeWork} />
+                    <Tab.Screen name="Dairy" component={Dairy} />
+                    {/* <Tab.Screen name="Profile" component={profile} /> */}
                 </Tab.Navigator>
             </NavigationContainer>
         )

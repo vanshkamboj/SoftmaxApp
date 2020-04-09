@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 10,
         backgroundColor: 'white',
         width: screenWidth / 1.1,
-        height: screenHeight / 2,
+        height: screenHeight / 1.9,
         // alignItems: 'center',
         // justifyContent: 'center',
         // padding: 10,

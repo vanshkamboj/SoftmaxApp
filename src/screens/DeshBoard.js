@@ -22,6 +22,7 @@ import {
     getProfile
 } from "../actions"
 import Loading from "../components/loading"
+import TextTicker from 'react-native-text-ticker'
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
 
@@ -29,8 +30,10 @@ class DeshBoard extends Component {
     componentDidMount() {
         changeNavigationBarColor('#2a017d')
         // this.props.otpChanged(null)
-        if (this.props.userArr == null)
+        if (this.props.userArr == null) {
             this.props.getProfile()
+            // this.props.getNotice(this.props.userArr[0].school_name)
+        }
     }
     render() {
         // console.log(this.props.userArr[0].school_name)
@@ -38,7 +41,7 @@ class DeshBoard extends Component {
         let { userArr } = this.props
         // changeNavigationBarColor(color)
         // hideNavigationBar()
-        // console.log(userArr)
+        // console.log(this.props.schoolLogoUrl)
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <KeyboardAwareScrollView
@@ -74,12 +77,20 @@ class DeshBoard extends Component {
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 <View>
                                     <Image
-                                        source={require('../images/bulb.png')}
+                                        source={{
+                                            uri: this.props.schoolLogoUrl,
+                                        }}
                                         style={{
                                             height: 100,
                                             width: 100,
                                             margin: 10,
                                             resizeMode: 'contain',
+                                            borderBottomLeftRadius: 20,
+                                            borderBottomRightRadius: 20,
+                                            borderTopLeftRadius: 20,
+                                            borderTopRightRadius: 20,
+                                            // borderWidth: 1,
+                                            borderColor: 'red'
                                         }}
                                     />
                                 </View>
@@ -99,15 +110,38 @@ class DeshBoard extends Component {
                                 </View>
                             </View>
                         </View>
+
                         <View style={{
                             flex: 5,
                             backgroundColor: 'white',
                             alignItems: 'center',
-                            justifyContent: 'center'
+                            // justifyContent: 'center'
                         }}>
+                            {/* <TextTicker
+                                style={{ fontSize: 24, marginVertical: 20 }}
+                                duration={1000}
+                                loop
+                                bounce
+                                repeatSpacer={50}
+                                marqueeDelay={1000}
+                                shouldAnimateTreshold={40}
+                            >
+                                Happy Birthday {userArr[0].student_name}
+                            </TextTicker> */}
+                            <TextTicker
+                                style={{ fontSize: 24, marginVertical: 20 }}
+                                duration={20000}
+                                loop
+                                bounce
+                                repeatSpacer={50}
+                                marqueeDelay={1000}
+                            >
+                                {this.props.notice}
+                            </TextTicker>
                             <View style={{ flexDirection: 'row' }} >
                                 <TouchableOpacity
                                     style={styles.cards}
+                                    onPress={() => Actions.homeWork()}
                                 >
                                     <Image
                                         source={require('../images/book.png')}
@@ -119,6 +153,7 @@ class DeshBoard extends Component {
                                         }}
                                     />
                                     <Text style={{ fontWeight: 'bold' }}>Dairy</Text>
+                                    {/* <Text style={{ fontWeight: 'bold' }}>(HomeWork)</Text> */}
 
                                 </TouchableOpacity>
                                 <TouchableOpacity
@@ -172,6 +207,7 @@ class DeshBoard extends Component {
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     style={styles.cards}
+                                    onPress={() => Actions.dairy()}
                                 >
                                     <Image
                                         source={require('../images/book.png')}
@@ -289,7 +325,9 @@ const mapStateTOProps = state => {
     return {
         number: state.auth.mobileNumber,
         isLoading: state.auth.isLoading,
-        userArr: state.auth.userArr
+        userArr: state.auth.userArr,
+        notice: state.auth.notice,
+        schoolLogoUrl: state.auth.schoolLogoUrl
     }
 }
 export default connect(mapStateTOProps, {
