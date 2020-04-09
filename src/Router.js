@@ -12,6 +12,9 @@ import Books from './screens/Books'
 import BooksSubject from './screens/BooksSubject'
 import OnlineTest from './screens/OnlineTest'
 import ViewBook from './screens/ViewBook'
+import HomeWork from './screens/HomeWork'
+import DairyPics from './screens/DairyPics'
+import ShowDairyPics from './screens/ShowDairyImage'
 const RouerComponent = () => {
     return (
         <Router
@@ -50,6 +53,15 @@ const RouerComponent = () => {
                         hideNavBar={true}
                     />
                     <Scene key="ViewBook" component={ViewBook}
+                        hideNavBar={true}
+                    />
+                    <Scene key="homeWork" component={HomeWork}
+                        hideNavBar={true}
+                    />
+                    <Scene key="dairy" component={DairyPics}
+                        hideNavBar={true}
+                    />
+                    <Scene key="dairyPics" component={ShowDairyPics}
                         hideNavBar={true}
                     />
                 </Scene>

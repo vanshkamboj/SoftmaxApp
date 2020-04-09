@@ -42,7 +42,7 @@ class ViewBook extends Component {
                     }}>
                         <Text style={{ color: 'white', fontSize: 20 }}>E_Learning</Text>
                         <TouchableOpacity
-                            onPress={() => Actions.BooksSubject()}
+                            onPress={() => Actions.Books()}
                             style={{
                                 position: 'absolute',
                                 left: 10
