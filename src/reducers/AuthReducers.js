@@ -16,7 +16,8 @@ import {
     ABSENT_DATE,
     ABSENT_DATE_COUNT,
     GET_MARKS,
-    GET_GALLARY
+    GET_GALLARY,
+    Password_CHANGED
 } from '../actions/types'
 const INITIAL_STATE = {
     mobileNumber: null,
@@ -36,13 +37,16 @@ const INITIAL_STATE = {
     absent: null,
     absentCount: 0,
     marks: null,
-    gallary: null
+    gallary: null,
+    password: null
 }
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case MOBILE_NUMBER_CHANGED:
             return { ...state, mobileNumber: action.payload }
+        case Password_CHANGED:
+            return { ...state, password: action.payload }
         case OTP_CHANGED:
             return { ...state, otp: action.payload }
         case LOADING:

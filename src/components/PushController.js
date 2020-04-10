@@ -15,13 +15,13 @@ export default class PushController extends Component {
                 console.log("NOTIFICATION:", notification);
 
                 // process the notification here
-
+                alert("jiii")
                 // required on iOS only 
                 notification.finish(PushNotificationIOS.FetchResult.NoData);
             },
             // Android only
-            // senderID: "232824403070",
-            senderID: "1090501687137",
+            senderID: "232824403070",
+            // senderID: "1090501687137",
             // iOS only
             permissions: {
                 alert: true,

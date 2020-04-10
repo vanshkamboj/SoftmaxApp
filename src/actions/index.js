@@ -19,12 +19,14 @@ import {
     ABSENT_DATE,
     ABSENT_DATE_COUNT,
     GET_MARKS,
-    GET_GALLARY
+    GET_GALLARY,
+    Password_CHANGED
 } from "./types"
 import firebase from 'react-native-firebase'
 // import auth from '@react-native-firebase/auth'
 import { Actions } from 'react-native-router-flux'
-import { loginSuccess } from "../actions/navigationScreens"
+import AsyncStorage from '@react-native-community/async-storage'
+// import { loginSuccess } from "../actions/navigationScreens"
 // import { AccessToken, LoginManager } from 'react-native-fbsdk'
 // import { GoogleSignin, statusCodes } from '@react-native-community/google-signin'
 // import { GoogleSignin } from 'react-native-google-signin'
@@ -35,6 +37,12 @@ export const numberChanged = (number) => {
     return {
         type: MOBILE_NUMBER_CHANGED,
         payload: number
+    }
+}
+export const passwordChanged = (pass) => {
+    return {
+        type: Password_CHANGED,
+        payload: pass
     }
 }
 export const otpChanged = (otp) => {
@@ -61,30 +69,62 @@ export const signOut = () => {
 
     }
 }
-export const logInUser = (phoneNumber) => {
+export const logInUser = (number, pass) => {
     return (dispatch) => {
         dispatch({ type: LOADING, payload: true })
-        firebase
-            .auth()
-            .signInWithPhoneNumber(`+91${phoneNumber}`)
-            .then(confirmResult => {
-                // this.setState({ confirmResult })
-                dispatch({ type: LOADING, payload: false })
-                dispatch({ type: CONFIRM_MOBILE, payload: confirmResult })
-                // dispatch({ type: 'success' })
-                Actions.otp()
-                // console.log(confirmResult)
-                // alert(confirmResult)
-            })
-            .catch(error => {
-                dispatch({ type: LOADING, payload: false })
-                alert(error.message)
+        fetch("https://softmax.info/Lgin_react.php?password=" + pass + "&email=" + number)
+            .then((response) => response.json())
+            .then((status) => {
+                // console.log(status);
+                if (status[0] == 'failure') {
+                    alert("please enter valid mobile number and password")
+                    dispatch({ type: LOADING, payload: false })
+                    return
+                }
 
-                // console.log(error)
+                // console.log(homework[0].homework);
+                // dispatch({ type: GET_LATEST_HOMEWORK, payload: homework[0].homework })
+                AsyncStorage.setItem('islogin', "true")
+                AsyncStorage.setItem('number', number)
+                AsyncStorage.setItem('pass', pass)
+                // dispatch({ type: GET_USER_DATA, payload: status })
+                dispatch({ type: LOADING, payload: false })
+                Actions.Home()
             })
+            .catch((error) => {
+                console.error(error);
+                alert(error)
+                dispatch({ type: LOADING, payload: false })
+            });
+
     }
 
 }
+// export const logInUser = (phoneNumber) => {
+//     return (dispatch) => {
+//         dispatch({ type: LOADING, payload: true })
+//         firebase
+//             .auth()
+//             .signInWithPhoneNumber(`+91${phoneNumber}`)
+//             .then(confirmResult => {
+//                 // this.setState({ confirmResult })
+//                 console.log(confirmResult)
+//                 dispatch({ type: LOADING, payload: false })
+//                 dispatch({ type: CONFIRM_MOBILE, payload: confirmResult })
+//                 // dispatch({ type: 'success' })
+//                 Actions.otp()
+//                 // console.log(confirmResult)
+//                 // alert(confirmResult)
+//             })
+//             .catch(error => {
+//                 dispatch({ type: LOADING, payload: false })
+//                 alert(error.message)
+
+//                 // console.log(error)
+//             })
+//     }
+
+// }
 
 export const otpVerification = (confirmResult, verificationCode) => {
     return (dispatch) => {
@@ -117,14 +157,15 @@ export const loading = (task) => {
     }
 }
 
-export const getProfile = () => {
+export const getProfile = (number, pass) => {
+    console.log(number, pass)
     return (dispatch) => {
         dispatch({ type: LOADING, payload: true })
-        fetch("https://softmax.info/getprofile2.php?id=" + 514 + "&mobile=" + 7017165652)
+        fetch("https://softmax.info/getprofile2.php?id=" + pass + "&mobile=" + number)
             .then((response) => response.json())
             .then((userInfo) => {
                 // return (dispatch) => {
-                // console.log(userInfo)
+                console.log(userInfo)
                 dispatch({ type: GET_USER_DATA, payload: userInfo })
                 dispatch({ type: LOADING, payload: false })
                 // getNotice("Demo Public School")
@@ -154,6 +195,7 @@ export const getProfile = () => {
                             .catch((error) => {
                                 console.error(error);
                                 alert(error)
+                                dispatch({ type: LOADING, payload: false })
                             });
 
                         // dispatch({ type: GET_SCHOOL_LOGO, payload: "https://softmax.info/images/" + school_name + "/logo.png" })
@@ -162,11 +204,13 @@ export const getProfile = () => {
                     .catch((error) => {
                         console.error(error);
                         alert(error)
+                        dispatch({ type: LOADING, payload: false })
                     });
             })
             .catch((error) => {
                 console.error(error);
                 alert(error)
+                dispatch({ type: LOADING, payload: false })
             });
 
     }
@@ -193,6 +237,7 @@ export const getBooks = (clas, medium) => {
             .catch((error) => {
                 console.error(error);
                 alert(error)
+                dispatch({ type: LOADING, payload: false })
             });
 
     }
@@ -221,6 +266,7 @@ export const getBooksSubject = (clas, medium, subject) => {
             .catch((error) => {
                 console.error(error);
                 alert(error)
+                dispatch({ type: LOADING, payload: false })
             });
 
     }
@@ -257,11 +303,13 @@ export const getDairyPics = (clas, school) => {
                     .catch((error) => {
                         console.error(error);
                         alert(error)
+                        dispatch({ type: LOADING, payload: false })
                     });
             })
             .catch((error) => {
                 console.error(error);
                 alert(error)
+                dispatch({ type: LOADING, payload: false })
             });
     }
 }
@@ -281,6 +329,7 @@ export const getHomeworkFromDate = (clas, school, date) => {
             .catch((error) => {
                 console.error(error);
                 alert(error)
+                dispatch({ type: LOADING, payload: false })
             });
 
     }
@@ -315,6 +364,7 @@ export const getAttendance = (rollNumber, school) => {
             .catch((error) => {
                 console.error(error);
                 alert(error)
+                dispatch({ type: LOADING, payload: false })
             });
 
     }
@@ -342,6 +392,7 @@ export const getMarks = (school, rollnum) => {
             .catch((error) => {
                 console.error(error);
                 alert(error)
+                dispatch({ type: LOADING, payload: false })
             });
 
     }
@@ -369,8 +420,27 @@ export const getGallaryData = (school) => {
             .catch((error) => {
                 console.error(error);
                 alert(error)
+                dispatch({ type: LOADING, payload: false })
             });
 
     }
 }
 
+// storeData = async () => {
+//     try {
+//         await AsyncStorage.setItem('@storage_Key', 'stored value')
+//     } catch (e) {
+//         // saving error
+//     }
+// }
+
+// getData = async () => {
+//     try {
+//         const value = await AsyncStorage.getItem('@storage_Key')
+//         if (value !== null) {
+//             // value previously stored
+//         }
+//     } catch (e) {
+//         // error reading value
+//     }
+// }

@@ -20,15 +20,30 @@ import { Actions } from 'react-native-router-flux'
 import { connect } from 'react-redux';
 import {
     numberChanged,
-    logInUser
+    logInUser,
+    passwordChanged
 } from "../actions"
 import Loading from "../components/loading"
+import AsyncStorage from '@react-native-community/async-storage'
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
 
 class signIn extends Component {
+    getData = async () => {
+
+        try {
+            const value = await AsyncStorage.getItem('islogin')
+            if (value !== null) {
+                if (value == "true")
+                    Actions.Home()
+            }
+        } catch (e) {
+            // error reading value
+        }
+    }
     componentDidMount() {
         changeNavigationBarColor('#2a017d')
+        this.getData()
     }
     render() {
         let color = '#2a017d'
@@ -79,6 +94,23 @@ class signIn extends Component {
                                 value={this.props.number}
                                 onChangeText={(number) => this.props.numberChanged(number)}
                             />
+                            <Text style={{ color: 'white', fontSize: 18 }}>
+                                Password
+                            </Text>
+                            <TextInput
+                                style={[{
+                                    width: screenWidth / 1.2,
+                                    backgroundColor: '#757eeb',
+                                    height: 55,
+                                    paddingHorizontal: 30,
+                                    marginTop: 10,
+                                    color: 'white'
+                                }, styles.radiusBorder]}
+                                keyboardType='name-phone-pad'
+                                secureTextEntry={true}
+                                value={this.props.pass}
+                                onChangeText={(password) => this.props.passwordChanged(password)}
+                            />
                             <TouchableOpacity
                                 style={[{
                                     backgroundColor: '#e0ae16',
@@ -90,7 +122,12 @@ class signIn extends Component {
                                     flexDirection: 'row',
                                     paddingHorizontal: 30
                                 }, styles.radiusBorder]}
-                                onPress={() => this.props.logInUser(this.props.number)}
+                                onPress={() => {
+                                    if (this.props.number !== null && this.props.pass !== null && this.props.number.length == 10)
+                                        // alert("done")
+                                        this.props.logInUser(this.props.number, this.props.pass)
+                                    // this.props.logInUser(this.props.number)
+                                }}
                             >
                                 <Text style={{ fontWeight: 'bold' }}>LOGIN</Text>
                                 <Image
@@ -128,10 +165,12 @@ const mapStateTOProps = state => {
     // console.log(state)
     return {
         number: state.auth.mobileNumber,
-        isLoading: state.auth.isLoading
+        isLoading: state.auth.isLoading,
+        pass: state.auth.password
     }
 }
 export default connect(mapStateTOProps, {
     numberChanged,
-    logInUser
+    logInUser,
+    passwordChanged
 })(signIn)

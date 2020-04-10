@@ -25,6 +25,7 @@ import {
 import Loading from "../components/loading"
 import TextTicker from 'react-native-text-ticker'
 import OptionsMenu from "react-native-options-menu"
+import AsyncStorage from '@react-native-community/async-storage'
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
 const MoreIcon = require("../images/options.png");
@@ -33,10 +34,11 @@ class DeshBoard extends Component {
     componentDidMount() {
         changeNavigationBarColor('#2a017d')
         // this.props.otpChanged(null)
-        if (this.props.userArr == null) {
-            this.props.getProfile()
-            // this.props.getNotice(this.props.userArr[0].school_name)
-        }
+        // if (this.props.userArr == null) {
+        // this.props.getProfile(this.props.number, this.props.pass)
+        this.getData()
+        // this.props.getNotice(this.props.userArr[0].school_name)
+        // }
         BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
     }
     componentWillUnmount() {
@@ -47,7 +49,7 @@ class DeshBoard extends Component {
             'Logout User',
             'Are you sure?',
             [
-                { text: 'Yes', onPress: () => this.props.signOut() },
+                { text: 'Yes', onPress: () => this.signOut() },
                 { text: 'No', onPress: () => console.log('User not signout'), style: 'cancel' },
             ],
             {
@@ -55,6 +57,32 @@ class DeshBoard extends Component {
             }
         );
     }
+    signOut = () => {
+        AsyncStorage.setItem('islogin', "false")
+
+        Actions.login()
+
+    }
+    getData = async () => {
+
+        try {
+            const number = await AsyncStorage.getItem('number')
+            const pass = await AsyncStorage.getItem('pass')
+            if (number !== null) {
+                this.props.getProfile(number, pass)
+            }
+        } catch (e) {
+            // error reading value
+        }
+    }
+    // signOut = async () => {
+    //     try {
+    //         await AsyncStorage.setItem('islogin', "false")
+    //         Actions.login()
+    //     } catch (e) {
+    //         // saving error
+    //     }
+    // }
     openPolicy = () => {
         Actions.policy()
     }
@@ -391,7 +419,8 @@ const mapStateTOProps = state => {
         isLoading: state.auth.isLoading,
         userArr: state.auth.userArr,
         notice: state.auth.notice,
-        schoolLogoUrl: state.auth.schoolLogoUrl
+        schoolLogoUrl: state.auth.schoolLogoUrl,
+        pass: state.auth.password
     }
 }
 export default connect(mapStateTOProps, {
