@@ -1,4 +1,5 @@
 export const MOBILE_NUMBER_CHANGED = 'MOBILE_NUMBER_CHANGED'
+export const Password_CHANGED = 'Password_CHANGED'
 export const OTP_CHANGED = 'OTP_CHANGED'
 export const LOGIN_USER_SUCCESS = 'login_user_success'
 export const LOADING = 'loading'

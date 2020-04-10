@@ -8,7 +8,7 @@ import {
 } from 'react-native'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
-import PushController from './components/PushController'
+// import PushController from './components/PushController'
 import reducers from './reducers'
 import Router from "./Router"
 import ReduxThunk from 'redux-thunk'
@@ -33,7 +33,7 @@ const Softmax = () => {
     return (
         <Provider store={store}>
             <Router />
-            <PushController />
+            {/* <PushController /> */}
         </Provider>
     )
 }

@@ -33,12 +33,12 @@ const RouerComponent = () => {
             <Scene key="root" hideNavBar>
                 <Scene key="auth">
                     <Scene key="Home" component={Home}
-                        initial
+                        // initial
                         // renderRightButton={InboxIcon}
                         hideNavBar={true}
                     />
                     <Scene key="login" component={Signin}
-                        // initial
+                        initial
                         // renderRightButton={InboxIcon}
                         hideNavBar={true}
                     />
