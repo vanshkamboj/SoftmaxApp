@@ -15,6 +15,9 @@ import {
     getDairyPics
 } from "../actions"
 import { WebView } from 'react-native-webview'
+// import RNFS from 'react-native-fs';
+// import FileViewer from 'react-native-file-viewer';
+// import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
 // import OpenFile from 'react-native-doc-viewer'
 // import ImageZoom from 'react-native-image-pan-zoom'
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -34,14 +37,35 @@ class ShowDairyPics extends Component {
     //     this.state = { visible: true };
     // }
     componentDidMount() {
+        let ext = this.props.image.split('.').pop()
+        // alert(ext)
         // let { userArr } = this.props
         // if (this.props.dairyPics == null)
         //     this.props.getDairyPics(userArr[0].class, userArr[0].school_name)
     }
+    // openFile = () => {
+    //     let url = "https://softmax.info/" + this.props.image
+    //     const localFile = `${RNFS.DocumentDirectoryPath}/temporaryfile.pdf`;
+    //     const options = {
+    //         fromUrl: url,
+    //         toFile: localFile
+    //     };
+    //     RNFS.downloadFile(options).promise
+    //         .then(() => FileViewer.open(localFile))
+    //         .then(() => {
+    //             // success
+    //             Actions.dairyPics()
+    //         })
+    //         .catch(error => {
+    //             // error
+    //         });
+    // }
 
     render() {
         let { userArr } = this.props
         let color = '#2a017d'
+        let ext = this.props.image.split('.').pop()
+        // alert(ext)
         return (
             <View style={{ flex: 1 }}>
                 < StatusBar backgroundColor={color} barStyle='light-content' />
@@ -108,26 +132,64 @@ class ShowDairyPics extends Component {
                         }}
                     /> */}
                     {/* </ImageZoom> */}
-                    <WebView
-                        onLoad={() => this.hideSpinner()}
-                        source={{ uri: "https://softmax.info/" + this.props.image }}
-                        style={{ flex: 2 }}
-                        scalesPageToFit={true}
-                        javaScriptEnabled={true}
-                        domStorageEnabled={true}
-                        decelerationRate="normal"
-                        startInLoadingState={true}
-                        automaticallyAdjustContentInsets={true}
-                    // startInLoadingState={true}
-                    // ref={ref => { this.webView = ref; }}
-                    // onError={() => { this.webView.reload(); }}
-                    />
+
+                    {ext == "jpg" || ext == "jpeg" || ext == "png" ?
+                        <WebView
+                            onLoad={() => this.hideSpinner()}
+
+                            source={{ uri: "https://softmax.info/" + this.props.image }}
+                            // source={{ uri: "https://docs.google.com/gview?embedded=true&url=http://softmax.info/" + this.props.image }}
+                            style={{ flex: 2 }}
+                            scalesPageToFit={true}
+                            javaScriptEnabled={true}
+                            domStorageEnabled={true}
+                            decelerationRate="normal"
+                            startInLoadingState={true}
+                            automaticallyAdjustContentInsets={true} />
+                        :
+                        <WebView
+                            onLoad={() => this.hideSpinner()}
+
+                            // source={{ uri: "https://softmax.info/" + this.props.image }}
+                            source={{ uri: "https://docs.google.com/gview?embedded=true&url=http://softmax.info/" + this.props.image }}
+                            style={{ flex: 2 }}
+                            scalesPageToFit={true}
+                            javaScriptEnabled={true}
+                            domStorageEnabled={true}
+                            decelerationRate="normal"
+                            startInLoadingState={true}
+                            automaticallyAdjustContentInsets={true} />
+                    }
+
+                    {/* // startInLoadingState={true}
+                        // ref={ref => { this.webView = ref; }}
+                        onError={() => {
+                            <WebView
+                                onLoad={() => this.hideSpinner()}
+
+                                // source={{ uri: "https://softmax.info/" + this.props.image }}
+                                source={{ uri: "https://docs.google.com/gview?embedded=true&url=http://softmax.info/" + this.props.image }}
+                                style={{ flex: 2 }}
+                                scalesPageToFit={true}
+                                javaScriptEnabled={true}
+                                domStorageEnabled={true}
+                                decelerationRate="normal"
+                                startInLoadingState={true}
+                                automaticallyAdjustContentInsets={true}
+                            // startInLoadingState={true}
+                            // ref={ref => { this.webView = ref; }}
+                            // onError={() => { }}
+                            />
+
+                        }} */}
+                    {/* /> */}
                     {this.state.visible && (
                         <ActivityIndicator
                             style={{ position: "absolute", top: screenHeight / 2, left: screenWidth / 2 }}
                             size="large"
                         />
                     )}
+
 
                 </View>
 

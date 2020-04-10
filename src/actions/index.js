@@ -15,7 +15,11 @@ import {
     GET_SCHOOL_LOGO,
     GET_DAIRY_PIC,
     DAIRT_PICS_COUNT,
-    GET_LATEST_HOMEWORK
+    GET_LATEST_HOMEWORK,
+    ABSENT_DATE,
+    ABSENT_DATE_COUNT,
+    GET_MARKS,
+    GET_GALLARY
 } from "./types"
 import firebase from 'react-native-firebase'
 // import auth from '@react-native-firebase/auth'
@@ -229,8 +233,7 @@ export const getDairyPics = (clas, school) => {
         fetch("https://softmax.info/get_markspic.php?school=" + school_name + "&class=" + clas)
             .then((response) => response.json())
             .then((pics) => {
-                // return (dispatch) => {
-                // console.log(pics)
+
                 dispatch({ type: GET_DAIRY_PIC, payload: pics })
                 let key, count = 0
                 for (key in pics) {
@@ -245,18 +248,11 @@ export const getDairyPics = (clas, school) => {
                 fetch("https://softmax.info/get_homework.php?school=" + school_name + "&class=" + clas)
                     .then((response) => response.json())
                     .then((homework) => {
-                        // return (dispatch) => {
-                        // console.log(homework)
+
                         dispatch({ type: GET_LATEST_HOMEWORK, payload: homework[0].homework })
-                        // let key, count = 0
-                        // for (key in pics) {
-                        //     if (pics.hasOwnProperty(key)) {
-                        //         count++
-                        //     }
-                        // }
-                        // dispatch({ type: DAIRT_PICS_COUNT, payload: count })
+
                         dispatch({ type: LOADING, payload: false })
-                        // }
+
                     })
                     .catch((error) => {
                         console.error(error);
@@ -269,23 +265,50 @@ export const getDairyPics = (clas, school) => {
             });
     }
 }
-export const getHomeworkFromDate = (clas, medium, subject) => {
+export const getHomeworkFromDate = (clas, school, date) => {
     let school_name = school.replace(/ /g, "%20")
     return (dispatch) => {
         dispatch({ type: LOADING, payload: true })
-        fetch("https://softmax.info/get_ebook.php?class_name=" + clas + "&medium=" + medium + "&subject=" + subject)
+        fetch("https://softmax.info/gethomework.php?date=" + date + "&clg=" + school_name + "&class=" + clas)
             .then((response) => response.json())
-            .then((Books) => {
+            .then((homework) => {
+                // console.log(homework);
+                // console.log(homework[0].homework);
+                dispatch({ type: GET_LATEST_HOMEWORK, payload: homework[0].homework })
+
+                dispatch({ type: LOADING, payload: false })
+            })
+            .catch((error) => {
+                console.error(error);
+                alert(error)
+            });
+
+    }
+
+}
+
+export const getAttendance = (rollNumber, school) => {
+    let school_name = school.replace(/ /g, "%20")
+    return (dispatch) => {
+        dispatch({ type: LOADING, payload: true })
+        fetch("https://softmax.info/getattendence.php?rollnum=" + rollNumber + "&school=" + school_name)
+            .then((response) => response.json())
+            .then((absent) => {
                 // return (dispatch) => {
-                // console.log(Books)
-                dispatch({ type: BOOKS_SUBJECT, payload: Books })
+                // console.log(absent)
+                if (absent[0] == 'failure') {
+                    dispatch({ type: LOADING, payload: false })
+                    return
+                }
+
+                dispatch({ type: ABSENT_DATE, payload: absent })
                 let key, count = 0
-                for (key in Books) {
-                    if (Books.hasOwnProperty(key)) {
+                for (key in absent) {
+                    if (absent.hasOwnProperty(key)) {
                         count++
                     }
                 }
-                dispatch({ type: BOOKS_SUBJECT_COUNT, payload: count })
+                dispatch({ type: ABSENT_DATE_COUNT, payload: count })
                 dispatch({ type: LOADING, payload: false })
                 // }
             })
@@ -297,6 +320,57 @@ export const getHomeworkFromDate = (clas, medium, subject) => {
     }
 }
 
-// String urladdress = "https://softmax.info/gethomework.php?date="+date+"&clg="+school+"&class="+clas;
 
-// String urladdress = "https://softmax.info/get_homework.php?school=" + school + "&class=" + clas;
+export const getMarks = (school, rollnum) => {
+    let school_name = school.replace(/ /g, "%20")
+    console.log(rollnum)
+    return (dispatch) => {
+        dispatch({ type: LOADING, payload: true })
+        fetch("https://softmax.info/get_marks.php?school=" + school_name + "&rollnum=" + rollnum)
+            .then((response) => response.json())
+            .then((marks) => {
+                // return (dispatch) => {
+                // console.log(marks)
+                if (marks[0] == 'failure') {
+                    dispatch({ type: LOADING, payload: false })
+                    return
+                }
+                dispatch({ type: GET_MARKS, payload: marks })
+                dispatch({ type: LOADING, payload: false })
+                // }
+            })
+            .catch((error) => {
+                console.error(error);
+                alert(error)
+            });
+
+    }
+}
+
+
+export const getGallaryData = (school) => {
+    let school_name = school.replace(/ /g, "%20")
+    // console.log(rollnum)
+    return (dispatch) => {
+        dispatch({ type: LOADING, payload: true })
+        fetch("https://softmax.info/get_gallary.php?school=" + school)
+            .then((response) => response.json())
+            .then((gallary) => {
+                // return (dispatch) => {
+                // console.log(marks)
+                if (gallary[0] == 'failure') {
+                    dispatch({ type: LOADING, payload: false })
+                    return
+                }
+                dispatch({ type: GET_GALLARY, payload: gallary })
+                dispatch({ type: LOADING, payload: false })
+                // }
+            })
+            .catch((error) => {
+                console.error(error);
+                alert(error)
+            });
+
+    }
+}
+

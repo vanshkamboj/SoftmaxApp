@@ -12,7 +12,11 @@ import {
     GET_SCHOOL_LOGO,
     GET_DAIRY_PIC,
     DAIRT_PICS_COUNT,
-    GET_LATEST_HOMEWORK
+    GET_LATEST_HOMEWORK,
+    ABSENT_DATE,
+    ABSENT_DATE_COUNT,
+    GET_MARKS,
+    GET_GALLARY
 } from '../actions/types'
 const INITIAL_STATE = {
     mobileNumber: null,
@@ -28,7 +32,11 @@ const INITIAL_STATE = {
     schoolLogoUrl: "https://softmax.info/images/Demo%20Public%20School/logo.png",
     dairyPics: null,
     dairyPicsCount: 0,
-    homework: null
+    homework: null,
+    absent: null,
+    absentCount: 0,
+    marks: null,
+    gallary: null
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -61,6 +69,14 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, dairyPicsCount: action.payload }
         case GET_LATEST_HOMEWORK:
             return { ...state, homework: action.payload }
+        case ABSENT_DATE:
+            return { ...state, absent: action.payload }
+        case ABSENT_DATE_COUNT:
+            return { ...state, absentCount: action.payload }
+        case GET_MARKS:
+            return { ...state, marks: action.payload }
+        case GET_GALLARY:
+            return { ...state, gallary: action.payload }
         default:
             return state
     }

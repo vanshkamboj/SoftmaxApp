@@ -7,25 +7,29 @@ import {
     FlatList,
     Dimensions,
     StatusBar,
+    ActivityIndicator
 } from "react-native"
 import { connect } from 'react-redux'
 import { Actions } from 'react-native-router-flux'
 import {
-    getDairyPics
+    getGallaryData
 } from "../actions"
 import Loading from '../components/loading'
+import { WebView } from 'react-native-webview'
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
 
-class DairyPics extends Component {
+class Gallary extends Component {
     // constructor(props) {
     //     super(props);
     //     this.state = { visible: true };
     // }
+
     componentDidMount() {
         let { userArr } = this.props
-        if (this.props.dairyPics == null)
-            this.props.getDairyPics(userArr[0].class, userArr[0].school_name)
+        if (this.props.gallary == null)
+            this.props.getGallaryData(userArr[0].school_name)
+        // this.props.getAttendance(userArr[0].student_id, userArr[0].school_name)
     }
 
     render() {
@@ -41,7 +45,7 @@ class DairyPics extends Component {
                         margin: 10,
                         alignItems: 'center'
                     }}>
-                        <Text style={{ color: 'white', fontSize: 20 }}>Dairy</Text>
+                        <Text style={{ color: 'white', fontSize: 20 }}>Gallary</Text>
                         <TouchableOpacity
                             onPress={() => Actions.Home()}
                             style={{
@@ -59,17 +63,17 @@ class DairyPics extends Component {
 
                         </TouchableOpacity>
                     </View>
-                    <View style={{
+                    {/* <View style={{
                         alignItems: 'center',
                         justifyContent: 'center',
                         margin: 10
                     }}>
                         <View style={{ marginLeft: 10 }}>
                             <Text style={{ color: 'white', fontSize: 25 }}>
-                                Total  {this.props.dairyPicsCount}  Images Found
+                                Total  {this.props.absentCount}  Absents
                             </Text>
                         </View>
-                    </View>
+                    </View> */}
 
                 </View>
                 <View style={{
@@ -79,13 +83,19 @@ class DairyPics extends Component {
                     flex: 2
                 }}>
                     <FlatList
-                        data={this.props.dairyPics}
+                        data={this.props.gallary}
                         // numColumns={2}
                         renderItem={({ item, index }) =>
                             <BooksList
-                                name={item.name}
-                                date={item.date}
-                                onSubjectSelect={() => Actions.dairyPics({ image: item.image })}
+                                // name={item.name}
+                                title={item.title}
+                                // marks={item.marks}
+                                url={item.path}
+                                showdata={() => Actions.showGallary({
+                                    title: item.title,
+                                    url: item.path,
+                                    dis: item.description
+                                })}
                             />
                         }
                         keyExtractor={(index, item) => index + item}
@@ -105,6 +115,15 @@ class DairyPics extends Component {
 }
 
 class BooksList extends Component {
+    // constructor(props) {
+    //     super(props);
+    //     this.state = { visible: true };
+    // }
+
+    // hideSpinner() {
+    //     this.setState({ visible: false });
+    // }
+    ext = this.props.url.split('.').pop()
     render() {
         return (
             <View style={{}}>
@@ -114,34 +133,71 @@ class BooksList extends Component {
                         borderWidth: 1,
                         borderColor: 'white',
                         borderBottomColor: 'gray',
-                        height: 50,
+                        height: 150,
                         alignItems: "center",
                         flexDirection: 'row'
                     }}
-                    onPress={() => this.props.onSubjectSelect()}
+                    onPress={() => this.props.showdata()}
                 >
-                    <Image
-                        source={require('../images/gallery.png')}
-                        style={{
-                            height: 30,
-                            width: 30,
-                            marginLeft: 10,
-                            resizeMode: 'contain',
-                        }}
-                    />
+                    {this.ext == "mp4" ?
+                        <Image
+                            source={require('../images/Video.png')}
+                            style={{
+                                height: 100,
+                                width: 100,
+                                marginLeft: 10,
+                                resizeMode: 'contain',
+                            }}
+                        />
+                        :
+                        <Image
+                            source={{ uri: this.props.url }}
+                            style={{
+                                height: 100,
+                                width: 100,
+                                marginLeft: 10,
+                                resizeMode: 'contain',
+                            }}
+                        />
+
+                    }
+
+
+                    {/* <View
+                        style={{ width: 100, height: 100 }}
+                    >
+                        <WebView
+                            onLoad={() => this.hideSpinner()}
+                            // source={{ uri: this.props.url }}
+                            source={{
+                                html: `
+                                <video width="100%" height="100%"  controls>
+                                    <source src="${this.props.url}" type="video/mp4">
+                                </video>
+                                `,
+                            }}
+                        // allowsInlineMediaPlayback={false}
+                        />
+                        {/* <Text>dhfkfhdkhfdkfhkdh</Text> */}
+                    {/* </View> */}
                     <Text style={{
                         fontSize: 15,
                         fontWeight: 'bold',
-                        marginLeft: 10
-                    }}>{this.props.name}</Text>
-                    <Text
+                        marginLeft: 20
+                    }}>{this.props.title}</Text>
+                    {/* <Text
                         style={{
                             position: 'absolute',
-                            right: 10,
-                            color: 'gray'
+                            right: 20,
                         }}
-                    >{this.props.date}</Text>
+                    >{this.props.marks}</Text> */}
                 </TouchableOpacity>
+                {/* {this.state.visible && (
+                    <ActivityIndicator
+                        style={{ position: "absolute", left: 10 }}
+                        size='small'
+                    />
+                )} */}
             </View>
         )
     }
@@ -152,10 +208,9 @@ const mapStateTOProps = state => {
         number: state.auth.mobileNumber,
         isLoading: state.auth.isLoading,
         userArr: state.auth.userArr,
-        dairyPics: state.auth.dairyPics,
-        dairyPicsCount: state.auth.dairyPicsCount
+        gallary: state.auth.gallary
     }
 }
 export default connect(mapStateTOProps, {
-    getDairyPics
-})(DairyPics)
+    getGallaryData
+})(Gallary)
