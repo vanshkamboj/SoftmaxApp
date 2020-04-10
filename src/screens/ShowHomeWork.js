@@ -15,7 +15,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { Actions } from 'react-native-router-flux'
 import { connect } from 'react-redux';
 import {
-    getDairyPics
+    getDairyPics,
+    getHomeworkFromDate
 } from "../actions"
 import Loading from "../components/loading"
 import DatePicker from 'react-native-date-picker'
@@ -26,15 +27,14 @@ class ShowHomeWork extends Component {
     state = {
         date: new Date(),
         ModalVisible: false,
-        selectedDate: ''
+        selectedDate: null
     }
     componentDidMount() {
 
         let { userArr } = this.props
-        if (this.props.homework == null)
-            this.props.getDairyPics(userArr[0].class, userArr[0].school_name)
+        // if (this.props.homework == null)
+        this.props.getDairyPics(userArr[0].class, userArr[0].school_name)
     }
-
     getDate = (today) => {
         // var today = new Date();
         var dd = today.getDate();
@@ -139,7 +139,12 @@ class ShowHomeWork extends Component {
                                             alignSelf: 'center',
                                             fontWeight: 'bold',
                                             marginTop: 10
-                                        }}>{this.props.homework}</Text>
+                                        }}>{this.props.homework !== null ?
+                                            this.props.homework !== undefined ?
+                                                this.props.homework : "HomeWork Not Found"
+                                            : "HomeWork Not Found"}</Text>
+
+
                                         {/* <DatePicker
                                             date={this.state.date}
                                             // onDateChange={(date) => this.setState({ date: date })}
@@ -171,7 +176,12 @@ class ShowHomeWork extends Component {
                                             />
                                             <View style={{ flexDirection: 'row', paddingHorizontal: 50, marginVertical: 10 }}>
                                                 <TouchableOpacity
-                                                    onPress={() => this.setState({ ModalVisible: false })}
+                                                    onPress={() => {
+                                                        this.setState({ ModalVisible: false })
+                                                        if (this.state.selectedDate !== null) {
+                                                            this.props.getHomeworkFromDate(userArr[0].class, userArr[0].school_name, this.state.selectedDate)
+                                                        }
+                                                    }}
                                                 >
                                                     <Text style={{ color: 'lightgreen', fontSize: 25, fontWeight: 'bold' }}>Select</Text>
                                                 </TouchableOpacity>
@@ -244,5 +254,6 @@ const mapStateTOProps = state => {
     }
 }
 export default connect(mapStateTOProps, {
-    getDairyPics
+    getDairyPics,
+    getHomeworkFromDate
 })(ShowHomeWork)

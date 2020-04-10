@@ -15,6 +15,14 @@ import ViewBook from './screens/ViewBook'
 import HomeWork from './screens/HomeWork'
 import DairyPics from './screens/DairyPics'
 import ShowDairyPics from './screens/ShowDairyImage'
+import NoticeBoard from './screens/NoticeBoard'
+import Attendance from './screens/Attendance'
+import ReportCard from './screens/ShowReportCard'
+import Syllabus from "./screens/ShowSylabus&TimeTable"
+import Marks from './screens/ShowMarks';
+import Gallary from './screens/Gallary'
+import ShowGallary from './screens/ShowGallary'
+import Policy from './screens/Policy'
 const RouerComponent = () => {
     return (
         <Router
@@ -62,6 +70,30 @@ const RouerComponent = () => {
                         hideNavBar={true}
                     />
                     <Scene key="dairyPics" component={ShowDairyPics}
+                        hideNavBar={true}
+                    />
+                    <Scene key="notice" component={NoticeBoard}
+                        hideNavBar={true}
+                    />
+                    <Scene key="attendance" component={Attendance}
+                        hideNavBar={true}
+                    />
+                    <Scene key="reportCard" component={ReportCard}
+                        hideNavBar={true}
+                    />
+                    <Scene key="syllabus" component={Syllabus}
+                        hideNavBar={true}
+                    />
+                    <Scene key="marks" component={Marks}
+                        hideNavBar={true}
+                    />
+                    <Scene key="gallary" component={Gallary}
+                        hideNavBar={true}
+                    />
+                    <Scene key="showGallary" component={ShowGallary}
+                        hideNavBar={true}
+                    />
+                    <Scene key="policy" component={Policy}
                         hideNavBar={true}
                     />
                 </Scene>

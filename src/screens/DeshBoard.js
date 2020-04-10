@@ -7,9 +7,10 @@ import {
     Dimensions,
     Keyboard,
     TouchableWithoutFeedback,
-    TextInput,
+    BackHandler,
     StatusBar,
-    Image
+    Image,
+    Alert
 } from 'react-native'
 import changeNavigationBarColor, {
     hideNavigationBar,
@@ -23,8 +24,10 @@ import {
 } from "../actions"
 import Loading from "../components/loading"
 import TextTicker from 'react-native-text-ticker'
+import OptionsMenu from "react-native-options-menu"
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
+const MoreIcon = require("../images/options.png");
 
 class DeshBoard extends Component {
     componentDidMount() {
@@ -34,6 +37,40 @@ class DeshBoard extends Component {
             this.props.getProfile()
             // this.props.getNotice(this.props.userArr[0].school_name)
         }
+        BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
+    }
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+    }
+    logOutUser = () => {
+        Alert.alert(
+            'Logout User',
+            'Are you sure?',
+            [
+                { text: 'Yes', onPress: () => this.props.signOut() },
+                { text: 'No', onPress: () => console.log('User not signout'), style: 'cancel' },
+            ],
+            {
+                cancelable: true
+            }
+        );
+    }
+    openPolicy = () => {
+        Actions.policy()
+    }
+    onBackPress = () => {
+        Alert.alert(
+            'Exit',
+            'Are you sure?',
+            [
+                { text: 'Yes', onPress: () => BackHandler.exitApp() },
+                { text: 'No', onPress: () => console.log('User not exit'), style: 'cancel' },
+            ],
+            {
+                cancelable: true
+            }
+        );
+        return true;
     }
     render() {
         // console.log(this.props.userArr[0].school_name)
@@ -57,22 +94,42 @@ class DeshBoard extends Component {
                                 alignItems: 'center'
                             }}>
                                 <Text style={{ color: 'white', fontSize: 20 }}>Home</Text>
-                                <TouchableOpacity
+                                {/* <TouchableOpacity
                                     // onPress={() => Actions.login()}
                                     style={{
                                         position: 'absolute',
                                         right: 5
                                     }}
-                                >
-                                    <Image
+                                > */}
+                                {/* <Image
                                         source={require('../images/options.png')}
                                         style={{
                                             height: 30,
                                             width: 30,
                                         }}
+                                    /> */}
+                                <View
+                                    style={{ position: 'absolute', right: 10 }}
+                                >
+                                    <OptionsMenu
+                                        button={MoreIcon}
+                                        buttonStyle={{
+                                            width: 30,
+                                            height: 30,
+                                            margin: 7.5,
+                                            resizeMode: "contain",
+                                            // position: 'absolute',
+                                            // alignSelf: 'center',
+                                            // left: 70
+                                        }}
+                                        destructiveIndex={1}
+                                        options={["Logout", "Policy"]}
+                                        actions={[this.logOutUser, this.openPolicy]}
                                     />
 
-                                </TouchableOpacity>
+                                </View>
+
+                                {/* </TouchableOpacity> */}
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 <View>
@@ -158,6 +215,7 @@ class DeshBoard extends Component {
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     style={styles.cards}
+                                    onPress={() => Actions.attendance()}
                                 >
                                     <Image
                                         source={require('../images/attendance.png')}
@@ -174,6 +232,7 @@ class DeshBoard extends Component {
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     style={styles.cards}
+                                    onPress={() => Actions.gallary()}
                                 >
                                     <Image
                                         source={require('../images/gallery.png')}
@@ -192,6 +251,7 @@ class DeshBoard extends Component {
                             <View style={{ flexDirection: 'row' }} >
                                 <TouchableOpacity
                                     style={styles.cards}
+                                    onPress={() => Actions.reportCard()}
                                 >
                                     <Image
                                         source={require('../images/statement.png')}
@@ -224,6 +284,7 @@ class DeshBoard extends Component {
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     style={styles.cards}
+                                    onPress={() => Actions.syllabus({ filename: "syllabus.jpg" })}
                                 >
                                     <Image
                                         source={require('../images/syllabus.png')}
@@ -242,6 +303,7 @@ class DeshBoard extends Component {
                             <View style={{ flexDirection: 'row' }} >
                                 <TouchableOpacity
                                     style={styles.cards}
+                                    onPress={() => Actions.marks()}
                                 >
                                     <Image
                                         source={require('../images/test.png')}
@@ -258,6 +320,7 @@ class DeshBoard extends Component {
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     style={styles.cards}
+                                    onPress={() => Actions.notice()}
                                 >
                                     <Image
                                         source={require('../images/notice.png')}
@@ -274,6 +337,7 @@ class DeshBoard extends Component {
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     style={styles.cards}
+                                    onPress={() => Actions.syllabus({ filename: "Time_table.jpg" })}
                                 >
                                     <Image
                                         source={require('../images/clipboard.png')}
