@@ -18,7 +18,8 @@ import {
     GET_MARKS,
     GET_GALLARY,
     Password_CHANGED,
-    GET_ALL_STUDENTS
+    GET_ALL_STUDENTS,
+    RESET
 } from '../actions/types'
 const INITIAL_STATE = {
     mobileNumber: null,
@@ -31,7 +32,7 @@ const INITIAL_STATE = {
     booksSubject: null,
     booksSubjectCount: 0,
     notice: null,
-    schoolLogoUrl: "https://softmax.info/images/Demo%20Public%20School/logo.png",
+    schoolLogoUrl: "https://softmax.info/images/school_logo_app.jpg",
     dairyPics: null,
     dairyPicsCount: 0,
     homework: null,
@@ -85,8 +86,9 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, gallary: action.payload }
         case GET_ALL_STUDENTS:
             return { ...state, allStudents: action.payload }
+        case RESET:
+            return { ...state, schoolLogoUrl: "https://softmax.info/images/school_logo_app.jpg" }
         default:
             return state
     }
-
 }
