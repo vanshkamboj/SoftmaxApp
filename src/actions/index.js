@@ -22,7 +22,9 @@ import {
     GET_GALLARY,
     Password_CHANGED,
     GET_ALL_STUDENTS,
-    RESET
+    RESET,
+    GET_STUDENT_PIC,
+    LOADING2
 } from "./types"
 import firebase from 'react-native-firebase'
 // import auth from '@react-native-firebase/auth'
@@ -162,7 +164,7 @@ export const loading = (task) => {
 export const getProfile = (number, pass) => {
     // console.log(number, pass)
     return (dispatch) => {
-        dispatch({ type: LOADING, payload: true })
+        dispatch({ type: LOADING2, payload: true })
         fetch("https://softmax.info/getprofile2.php?id=" + pass + "&mobile=" + number)
             .then((response) => response.json())
             .then((userInfo) => {
@@ -201,7 +203,7 @@ export const getProfile = (number, pass) => {
                                 // console.log(homework[0].homework);
                                 // dispatch({ type: GET_LATEST_HOMEWORK, payload: homework[0].homework })
 
-                                dispatch({ type: LOADING, payload: false })
+                                dispatch({ type: LOADING2, payload: false })
 
                                 fetch("https://softmax.info/images/" + school_name + "/logo.png")
                                     // .then((response) => response.json())
@@ -211,18 +213,33 @@ export const getProfile = (number, pass) => {
                                             dispatch({ type: GET_SCHOOL_LOGO, payload: "https://softmax.info/images/" + school_name + "/logo.png" })
                                         // alert(school_name)
                                         // dispatch({ type: LOADING, payload: false })
+                                        fetch("https://softmax.info/uploaded/" + school_name + "/Photos/" + pass + ".jpg")
+                                            // .then((response) => response.json())
+                                            .then((url) => {
+                                                // console.log(url.ok)
+                                                if (url.ok == true)
+                                                    dispatch({ type: GET_STUDENT_PIC, payload: "https://softmax.info/uploaded/" + school_name + "/Photos/" + pass + ".jpg" })
+                                                // alert(school_name)
+                                                // dispatch({ type: LOADING, payload: false })
+
+                                            })
+                                            .catch((error) => {
+                                                // console.error(error);
+                                                alert(error)
+                                                dispatch({ type: LOADING2, payload: false })
+                                            });
 
                                     })
                                     .catch((error) => {
                                         // console.error(error);
                                         alert(error)
-                                        dispatch({ type: LOADING, payload: false })
+                                        dispatch({ type: LOADING2, payload: false })
                                     });
                             })
                             .catch((error) => {
                                 // console.error(error);
                                 alert(error)
-                                dispatch({ type: LOADING, payload: false })
+                                dispatch({ type: LOADING2, payload: false })
                             });
 
                         // dispatch({ type: GET_SCHOOL_LOGO, payload: "https://softmax.info/images/" + school_name + "/logo.png" })
@@ -231,13 +248,13 @@ export const getProfile = (number, pass) => {
                     .catch((error) => {
                         // console.error(error);
                         alert(error)
-                        dispatch({ type: LOADING, payload: false })
+                        dispatch({ type: LOADING2, payload: false })
                     });
             })
             .catch((error) => {
                 // console.error(error);
                 alert(error)
-                dispatch({ type: LOADING, payload: false })
+                dispatch({ type: LOADING2, payload: false })
             });
 
     }
@@ -495,8 +512,7 @@ export const getGallaryData = (school) => {
 export const reset = () => {
     return (dispatch) => {
         dispatch({ type: RESET, payload: true })
-        Actions.Home()
-
+        // Actions.Home()
     }
 }
 

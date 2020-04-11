@@ -30,7 +30,6 @@ class ShowHomeWork extends Component {
         selectedDate: null
     }
     componentDidMount() {
-
         let { userArr } = this.props
         // if (this.props.homework == null)
         this.props.getDairyPics(userArr[0].class, userArr[0].school_name)
@@ -102,7 +101,6 @@ class ShowHomeWork extends Component {
                         }}>
 
 
-
                             <View style={{ position: 'absolute', bottom: 150 }} >
                                 <View
                                     style={styles.cards}
@@ -141,8 +139,8 @@ class ShowHomeWork extends Component {
                                             marginTop: 10
                                         }}>{this.props.homework !== null ?
                                             this.props.homework !== undefined ?
-                                                this.props.homework : "HomeWork Not Found"
-                                            : "HomeWork Not Found"}</Text>
+                                                this.props.homework : "HomeWork(Text) Not Found Also Check HomeWork in Diary pics"
+                                            : "HomeWork(Text) Not Found Also Check HomeWork in Diary pics"}</Text>
 
 
                                         {/* <DatePicker
@@ -154,10 +152,15 @@ class ShowHomeWork extends Component {
                                     </View>
                                 </View>
                             </View>
+                            <View style={{ position: 'absolute', bottom: 100 }}>
+                                <Text style={{ fontWeight: 'bold' }}>ALSO CHECK DIARY PIC FOR HOMEWORk</Text>
+                            </View>
+
                         </View>
                         <View>
                             {this.props.isLoading ? <Loading /> : null}
                         </View>
+
 
                         <Modal
                             animationType="fade"
@@ -204,6 +207,7 @@ class ShowHomeWork extends Component {
 
 
                         </Modal>
+
                     </View>
                 </KeyboardAwareScrollView>
             </TouchableWithoutFeedback>

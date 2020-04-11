@@ -19,7 +19,9 @@ import {
     GET_GALLARY,
     Password_CHANGED,
     GET_ALL_STUDENTS,
-    RESET
+    RESET,
+    GET_STUDENT_PIC,
+    LOADING2
 } from '../actions/types'
 const INITIAL_STATE = {
     mobileNumber: null,
@@ -41,7 +43,9 @@ const INITIAL_STATE = {
     marks: null,
     gallary: null,
     password: null,
-    allStudents: null
+    allStudents: null,
+    studentPic: null,
+    isLoading2: false
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -54,6 +58,8 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, otp: action.payload }
         case LOADING:
             return { ...state, isLoading: action.payload }
+        case LOADING2:
+            return { ...state, isLoading2: action.payload }
         case CONFIRM_MOBILE:
             return { ...state, confirmResult: action.payload }
         case GET_USER_DATA:
@@ -87,7 +93,13 @@ export default (state = INITIAL_STATE, action) => {
         case GET_ALL_STUDENTS:
             return { ...state, allStudents: action.payload }
         case RESET:
-            return { ...state, schoolLogoUrl: "https://softmax.info/images/school_logo_app.jpg" }
+            return {
+                ...state, schoolLogoUrl: "https://softmax.info/images/school_logo_app.jpg",
+                userArr: null,
+                studentPic: null
+            }
+        case GET_STUDENT_PIC:
+            return { ...state, studentPic: action.payload }
         default:
             return state
     }

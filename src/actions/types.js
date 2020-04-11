@@ -20,3 +20,5 @@ export const GET_MARKS = "GET_MARKS"
 export const GET_GALLARY = "GET_GALLARY"
 export const GET_ALL_STUDENTS = 'GET_ALL_STUDENTS'
 export const RESET = 'RESET'
+export const GET_STUDENT_PIC = 'GET_STUDENT_PIC'
+export const LOADING2 = "LOADING2"
