@@ -9,7 +9,8 @@ import {
     TouchableWithoutFeedback,
     TextInput,
     StatusBar,
-    Image
+    Image,
+    ActivityIndicator
 } from 'react-native'
 import changeNavigationBarColor, {
     hideNavigationBar,
@@ -63,7 +64,7 @@ class signIn extends Component {
                         }}>
                             < StatusBar backgroundColor={color} barStyle='light-content' />
                             <Image
-                                source={require('../images/bulb.png')}
+                                source={require('../images/logo.jpg')}
                                 style={{
                                     height: 200,
                                     width: 200,
@@ -71,11 +72,11 @@ class signIn extends Component {
                                 }}
                             />
                             <Text style={{
-                                fontSize: 40,
+                                fontSize: 22,
                                 color: '#e0ae16',
                                 fontWeight: 'bold',
                                 margin: 10
-                            }}>Softmax</Text>
+                            }}>Your Online School App</Text>
                         </View>
                         <View>
                             <Text style={{ color: 'white', fontSize: 18 }}>
@@ -95,7 +96,7 @@ class signIn extends Component {
                                 onChangeText={(number) => this.props.numberChanged(number)}
                             />
                             <Text style={{ color: 'white', fontSize: 18 }}>
-                                Password
+                                PASSWORD
                             </Text>
                             <TextInput
                                 style={[{
@@ -142,11 +143,20 @@ class signIn extends Component {
                             </TouchableOpacity>
                         </View>
                         <View>
-                            {this.props.isLoading ? <Loading /> : null}
+                            {/* {this.props.isLoading ? <Loading /> : null} */}
+
 
                         </View>
+
                     </View>
+                    {this.props.isLoading && (
+                        <ActivityIndicator
+                            style={{ position: "absolute", top: screenHeight / 2, left: screenWidth / 2 }}
+                            size="large"
+                        />
+                    )}
                 </KeyboardAwareScrollView>
+
             </TouchableWithoutFeedback>
         )
     }

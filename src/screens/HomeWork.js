@@ -72,7 +72,7 @@ export default class HomeWork extends Component {
                                         color={color}
                                     />
                                 );
-                            } else if (route.name === 'Dairy') {
+                            } else if (route.name === 'Dairy Pic') {
                                 return (
                                     <Image
                                         source={require('../images/book.png')}
@@ -93,7 +93,7 @@ export default class HomeWork extends Component {
                     }}
                 >
                     <Tab.Screen name="HomeWork" component={homeWork} />
-                    <Tab.Screen name="Dairy" component={Dairy} />
+                    <Tab.Screen name="Dairy Pic" component={Dairy} />
                     {/* <Tab.Screen name="Profile" component={profile} /> */}
                 </Tab.Navigator>
             </NavigationContainer>
