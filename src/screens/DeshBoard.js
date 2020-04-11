@@ -10,7 +10,8 @@ import {
     BackHandler,
     StatusBar,
     Image,
-    Alert
+    Alert,
+    ActivityIndicator
 } from 'react-native'
 import changeNavigationBarColor, {
     hideNavigationBar,
@@ -108,12 +109,15 @@ class DeshBoard extends Component {
         // hideNavigationBar()
         // console.log(this.props.schoolLogoUrl)
         return (
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}
+                style={{ height: screenHeight, width: screenWidth }}
+            >
                 <KeyboardAwareScrollView
-                // style={{ flex: 1 }}
+                    style={{ height: screenHeight, width: screenWidth }}
                 >
+
                     < StatusBar backgroundColor={color} barStyle='light-content' />
-                    <View style={{ flex: 1, height: screenHeight }}>
+                    <View style={{ flex: 1, height: screenHeight, width: screenWidth }}>
                         <View style={{ flex: 2, backgroundColor: color }}>
                             <View style={{
                                 flexDirection: 'row',
@@ -121,7 +125,7 @@ class DeshBoard extends Component {
                                 margin: 10,
                                 alignItems: 'center'
                             }}>
-                                <Text style={{ color: 'white', fontSize: 20 }}>Home</Text>
+                                <Text style={{ color: 'white', fontSize: 20 }}>Softmax</Text>
                                 {/* <TouchableOpacity
                                     // onPress={() => Actions.login()}
                                     style={{
@@ -159,7 +163,12 @@ class DeshBoard extends Component {
 
                                 {/* </TouchableOpacity> */}
                             </View>
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <View style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                width: screenWidth,
+                                paddingHorizontal: 10
+                            }}>
                                 <View>
                                     <Image
                                         source={{
@@ -168,7 +177,6 @@ class DeshBoard extends Component {
                                         style={{
                                             height: 100,
                                             width: 100,
-                                            margin: 10,
                                             resizeMode: 'contain',
                                             borderBottomLeftRadius: 20,
                                             borderBottomRightRadius: 20,
@@ -179,16 +187,24 @@ class DeshBoard extends Component {
                                         }}
                                     />
                                 </View>
-                                <View style={{ marginLeft: 10 }}>
-                                    <Text style={{ color: 'white', fontSize: 25, width: screenHeight / 3 }}>
+                                <View style={{
+                                    // width: screenWidth,
+                                    alignItems: 'center',
+                                    // justifyContent: 'center',
+                                    // backgroundColor: 'red',
+                                    paddingHorizontal: 2,
+                                    width: screenWidth / 1.5,
+                                    marginLeft: 10
+                                }}>
+                                    <Text style={{ color: 'white', fontSize: 25 }}>
                                         {this.props.userArr !== null ? userArr[0].school_name : null}
 
                                     </Text>
-                                    <Text style={{ color: '#e0ae16', fontSize: 18, width: screenHeight / 3 }}>
+                                    <Text style={{ color: '#e0ae16', fontSize: 18 }}>
                                         {this.props.userArr !== null ? userArr[0].student_name : null}
-                                        {/* {userArr[0].student_name} */}
+                                        {/* width: screenHeight / 3  */}
                                     </Text>
-                                    <Text style={{ color: '#e0ae16', fontSize: 18, width: screenHeight / 3 }}>
+                                    <Text style={{ color: '#e0ae16', fontSize: 18 }}>
                                         {this.props.userArr !== null ? userArr[0].class : null}
                                         {/* {userArr[0].class} */}
                                     </Text>
@@ -290,7 +306,7 @@ class DeshBoard extends Component {
                                             resizeMode: 'contain',
                                         }}
                                     />
-                                    <Text style={{ fontWeight: 'bold' }}>Report Crad</Text>
+                                    <Text style={{ fontWeight: 'bold' }}>Report Card</Text>
 
                                 </TouchableOpacity>
                                 <TouchableOpacity
@@ -387,10 +403,16 @@ class DeshBoard extends Component {
 
 
                         </View>
-                        <View>
+                        {/* <View>
                             {this.props.isLoading ? <Loading /> : null}
-                        </View>
+                        </View> */}
                     </View>
+                    {this.props.isLoading && (
+                        <ActivityIndicator
+                            style={{ position: "absolute", top: screenHeight / 2, left: screenWidth / 2 }}
+                            size="large"
+                        />
+                    )}
                 </KeyboardAwareScrollView>
             </TouchableWithoutFeedback>
         )

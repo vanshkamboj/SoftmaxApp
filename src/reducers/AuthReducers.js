@@ -17,7 +17,8 @@ import {
     ABSENT_DATE_COUNT,
     GET_MARKS,
     GET_GALLARY,
-    Password_CHANGED
+    Password_CHANGED,
+    GET_ALL_STUDENTS
 } from '../actions/types'
 const INITIAL_STATE = {
     mobileNumber: null,
@@ -38,7 +39,8 @@ const INITIAL_STATE = {
     absentCount: 0,
     marks: null,
     gallary: null,
-    password: null
+    password: null,
+    allStudents: null
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -81,6 +83,8 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, marks: action.payload }
         case GET_GALLARY:
             return { ...state, gallary: action.payload }
+        case GET_ALL_STUDENTS:
+            return { ...state, allStudents: action.payload }
         default:
             return state
     }

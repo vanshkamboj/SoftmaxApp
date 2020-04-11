@@ -73,7 +73,7 @@ class ShowHomeWork extends Component {
                                 margin: 10,
                                 alignItems: 'center'
                             }}>
-                                <Text style={{ color: 'white', fontSize: 20 }}>Home Work</Text>
+                                <Text style={{ color: 'white', fontSize: 20 }}>Home Work(Text)</Text>
                                 <TouchableOpacity
                                     onPress={() => Actions.Home()}
                                     style={{
@@ -169,6 +169,7 @@ class ShowHomeWork extends Component {
                                         <View style={styles.model}>
                                             <Text style={styles.modelText}>Select Date</Text>
                                             <DatePicker
+                                                style={{ width: screenWidth / 2, alignSelf: 'center' }}
                                                 date={this.state.date}
                                                 // onDateChange={(date) => this.setState({ date: date })}
                                                 onDateChange={(date) => this.getDate(date)}

@@ -20,7 +20,8 @@ import {
     ABSENT_DATE_COUNT,
     GET_MARKS,
     GET_GALLARY,
-    Password_CHANGED
+    Password_CHANGED,
+    GET_ALL_STUDENTS
 } from "./types"
 import firebase from 'react-native-firebase'
 // import auth from '@react-native-firebase/auth'
@@ -158,16 +159,16 @@ export const loading = (task) => {
 }
 
 export const getProfile = (number, pass) => {
-    console.log(number, pass)
+    // console.log(number, pass)
     return (dispatch) => {
         dispatch({ type: LOADING, payload: true })
         fetch("https://softmax.info/getprofile2.php?id=" + pass + "&mobile=" + number)
             .then((response) => response.json())
             .then((userInfo) => {
                 // return (dispatch) => {
-                console.log(userInfo)
+                // console.log(userInfo)
                 dispatch({ type: GET_USER_DATA, payload: userInfo })
-                dispatch({ type: LOADING, payload: false })
+
                 // getNotice("Demo Public School")
                 // }
                 fetch("https://softmax.info/getnotice.php?school=" + userInfo[0].school_name)
@@ -178,22 +179,47 @@ export const getProfile = (number, pass) => {
                         // console.log(notice[0].notice)
                         dispatch({ type: NOTICE_CHANGED, payload: notice[0].notice })
                         // dispatch({ type: LOADING, payload: false })
+                        // dispatch({ type: LOADING, payload: false })
                         // }
                         let school_name = userInfo[0].school_name.replace(/ /g, "%20")
-
                         // fetch("https://softmax.info/images/" + school_name + "/logo.png")
-                        fetch("https://softmax.info/images/" + school_name + "/logo.png")
-                            // .then((response) => response.json())
-                            .then((url) => {
-                                // console.log(url.ok)
-                                if (url.ok == true)
-                                    dispatch({ type: GET_SCHOOL_LOGO, payload: "https://softmax.info/images/" + school_name + "/logo.png" })
-                                // alert(school_name)
-                                // dispatch({ type: LOADING, payload: false })
 
+                        fetch("https://softmax.info/getprofile_spinner.php?mobile=" + number)
+                            .then((response) => response.json())
+                            .then((students) => {
+                                dispatch({ type: GET_ALL_STUDENTS, payload: students })
+                                // console.log(students);
+                                // console.log(students[0].length)
+                                // let key, count = 0
+                                // for (key in students) {
+                                //     if (students.hasOwnProperty(key)) {
+                                //         count++
+                                //     }
+                                // }
+                                // console.log(count)
+                                // console.log(homework[0].homework);
+                                // dispatch({ type: GET_LATEST_HOMEWORK, payload: homework[0].homework })
+
+                                dispatch({ type: LOADING, payload: false })
+
+                                fetch("https://softmax.info/images/" + school_name + "/logo.png")
+                                    // .then((response) => response.json())
+                                    .then((url) => {
+                                        // console.log(url.ok)
+                                        if (url.ok == true)
+                                            dispatch({ type: GET_SCHOOL_LOGO, payload: "https://softmax.info/images/" + school_name + "/logo.png" })
+                                        // alert(school_name)
+                                        // dispatch({ type: LOADING, payload: false })
+
+                                    })
+                                    .catch((error) => {
+                                        // console.error(error);
+                                        alert(error)
+                                        dispatch({ type: LOADING, payload: false })
+                                    });
                             })
                             .catch((error) => {
-                                console.error(error);
+                                // console.error(error);
                                 alert(error)
                                 dispatch({ type: LOADING, payload: false })
                             });
@@ -202,13 +228,13 @@ export const getProfile = (number, pass) => {
                         // alert(school_name)
                     })
                     .catch((error) => {
-                        console.error(error);
+                        // console.error(error);
                         alert(error)
                         dispatch({ type: LOADING, payload: false })
                     });
             })
             .catch((error) => {
-                console.error(error);
+                // console.error(error);
                 alert(error)
                 dispatch({ type: LOADING, payload: false })
             });
@@ -221,6 +247,11 @@ export const getBooks = (clas, medium) => {
         fetch("https://softmax.info/get_ebook_sub.php?medium=" + medium + "&class=" + clas)
             .then((response) => response.json())
             .then((Books) => {
+                if (Books[0] == 'failure') {
+                    // alert("please enter valid mobile number and password")
+                    dispatch({ type: LOADING, payload: false })
+                    return
+                }
                 // return (dispatch) => {
                 // console.log(Books)
                 dispatch({ type: GET_BOOKS, payload: Books })
@@ -252,6 +283,11 @@ export const getBooksSubject = (clas, medium, subject) => {
             .then((Books) => {
                 // return (dispatch) => {
                 // console.log(Books)
+                if (Books[0] == 'failure') {
+                    // alert("please enter valid mobile number and password")
+                    dispatch({ type: LOADING, payload: false })
+                    return
+                }
                 dispatch({ type: BOOKS_SUBJECT, payload: Books })
                 let key, count = 0
                 for (key in Books) {
@@ -276,30 +312,45 @@ export const getDairyPics = (clas, school) => {
     let school_name = school.replace(/ /g, "%20")
     return (dispatch) => {
         dispatch({ type: LOADING, payload: true })
-        fetch("https://softmax.info/get_markspic.php?school=" + school_name + "&class=" + clas)
+        fetch("https://softmax.info/get_homework.php?school=" + school_name + "&class=" + clas)
             .then((response) => response.json())
-            .then((pics) => {
+            .then((homework) => {
 
-                dispatch({ type: GET_DAIRY_PIC, payload: pics })
-                let key, count = 0
-                for (key in pics) {
-                    if (pics.hasOwnProperty(key)) {
-                        count++
-                    }
-                }
-                dispatch({ type: DAIRT_PICS_COUNT, payload: count })
-                // dispatch({ type: LOADING, payload: false })
-                // }
+                dispatch({ type: GET_LATEST_HOMEWORK, payload: homework[0].homework })
 
-                fetch("https://softmax.info/get_homework.php?school=" + school_name + "&class=" + clas)
+                dispatch({ type: LOADING, payload: false })
+
+                // })
+                fetch("https://softmax.info/get_markspic.php?school=" + school_name + "&class=" + clas)
                     .then((response) => response.json())
-                    .then((homework) => {
+                    .then((pics) => {
+                        if (pics[0] == 'failure') {
+                            // alert("please enter valid mobile number and password")
+                            dispatch({ type: LOADING, payload: false })
+                            return
+                        }
 
-                        dispatch({ type: GET_LATEST_HOMEWORK, payload: homework[0].homework })
-
-                        dispatch({ type: LOADING, payload: false })
-
+                        dispatch({ type: GET_DAIRY_PIC, payload: pics })
+                        let key, count = 0
+                        for (key in pics) {
+                            if (pics.hasOwnProperty(key)) {
+                                count++
+                            }
+                        }
+                        dispatch({ type: DAIRT_PICS_COUNT, payload: count })
                     })
+                    // dispatch({ type: LOADING, payload: false })
+                    // }
+
+                    // fetch("https://softmax.info/get_homework.php?school=" + school_name + "&class=" + clas)
+                    //     .then((response) => response.json())
+                    //     .then((homework) => {
+
+                    //         dispatch({ type: GET_LATEST_HOMEWORK, payload: homework[0].homework })
+
+                    //         dispatch({ type: LOADING, payload: false })
+
+                    //     })
                     .catch((error) => {
                         console.error(error);
                         alert(error)

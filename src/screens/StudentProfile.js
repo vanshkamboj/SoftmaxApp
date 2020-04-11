@@ -9,7 +9,9 @@ import {
     TouchableWithoutFeedback,
     TextInput,
     StatusBar,
-    Image
+    Image,
+    Modal,
+    FlatList
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Actions } from 'react-native-router-flux'
@@ -18,13 +20,31 @@ import {
     getProfile
 } from "../actions"
 import Loading from "../components/loading"
+import AsyncStorage from '@react-native-community/async-storage'
+
+
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
 
 class Profile extends Component {
+    state = {
+        ModalVisible: false,
+    }
     componentDidMount() {
         // this.props.otpChanged(null)
         // this.props.getProfile()
+    }
+    changeStudent = async (number, id) => {
+
+        try {
+            // const value = await AsyncStorage.getItem('islogin')
+            await AsyncStorage.setItem('number', number)
+            await AsyncStorage.setItem('pass', id)
+            Actions.Home()
+        } catch (e) {
+            // error reading value
+            alert(e)
+        }
     }
     render() {
         // console.log(this.props.userArr[0].school_name)
@@ -163,7 +183,7 @@ class Profile extends Component {
                                             alignItems: 'center',
                                             flexDirection: 'row'
                                         }}>
-                                            <Text style={{ color: 'lightgray', fontWeight: 'bold' }}>Date of Barth</Text>
+                                            <Text style={{ color: 'lightgray', fontWeight: 'bold' }}>Date of Birth</Text>
                                             <Text style={{
                                                 fontWeight: 'bold',
                                                 position: 'absolute',
@@ -238,12 +258,112 @@ class Profile extends Component {
                                         </View>
                                     </View>
 
+                                    <View style={{ marginHorizontal: 10 }}>
+                                        <View style={{
+                                            borderColor: 'white',
+                                            borderBottomColor: 'lightgray',
+                                            borderWidth: 2,
+                                            height: 50,
+                                            alignItems: 'center',
+                                            flexDirection: 'row'
+                                        }}>
+                                            <Text style={{ color: 'lightgray', fontWeight: 'bold' }}>Change Student</Text>
+                                            <View
+                                                style={{ position: 'absolute', right: 10 }}
+                                            >
+                                                <TouchableOpacity
+                                                    onPress={() => this.setState({ ModalVisible: true })}
+                                                >
+                                                    <Text>select</Text>
+                                                </TouchableOpacity>
+
+
+                                            </View>
+
+                                        </View>
+                                    </View>
+
                                 </View>
                             </View>
                         </View>
                         <View>
                             {this.props.isLoading ? <Loading /> : null}
                         </View>
+                        <Modal
+                            animationType="fade"
+                            transparent={true}
+                            visible={this.state.ModalVisible}>
+                            <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                                <View style={{ marginHorizontal: 30, marginTop: 200 }}>
+                                    <View style={styles.model}>
+                                        <View style={[styles.model, { height: screenHeight / 3 }]}>
+                                            <Text style={styles.modelText}>Students List</Text>
+                                            {/* <DatePicker
+                                                style={{ width: screenWidth / 2, alignSelf: 'center' }}
+                                                date={this.state.date}
+                                                // onDateChange={(date) => this.setState({ date: date })}
+                                                onDateChange={(date) => this.getDate(date)}
+                                                mode={'date'}
+                                            /> */}
+                                            <FlatList
+                                                style={{ width: screenWidth / 2, alignSelf: 'center' }}
+                                                data={this.props.allStudents}
+                                                // numColumns={2}
+                                                renderItem={({ item, index }) =>
+                                                    <View>
+                                                        <TouchableOpacity
+                                                            style={{
+                                                                margin: 2,
+                                                                backgroundColor: 'white',
+                                                                height: 50,
+                                                                justifyContent: 'center',
+                                                                borderBottomLeftRadius: 30,
+                                                                borderBottomRightRadius: 30,
+                                                                borderTopLeftRadius: 30,
+                                                                borderTopRightRadius: 30,
+                                                            }}
+                                                            onPress={() => {
+                                                                this.setState({ ModalVisible: false })
+                                                                this.changeStudent(item.mobile, item.student_id)
+                                                            }}
+                                                        >
+                                                            <Text style={{ fontSize: 18, marginLeft: 5 }}>{item.student_name}</Text>
+                                                        </TouchableOpacity>
+                                                    </View>
+                                                }
+                                                keyExtractor={(index, item) => index + item}
+                                            >
+
+                                            </FlatList>
+                                            <View style={{ paddingHorizontal: 50, marginVertical: 10, alignItems: 'center' }}>
+                                                {/* <TouchableOpacity
+                                                    onPress={() => {
+                                                        this.setState({ ModalVisible: false })
+                                                        if (this.state.selectedDate !== null) {
+                                                            this.props.getHomeworkFromDate(userArr[0].class, userArr[0].school_name, this.state.selectedDate)
+                                                        }
+                                                    }}
+                                                >
+                                                    <Text style={{ color: 'lightgreen', fontSize: 25, fontWeight: 'bold' }}>Select</Text>
+                                                </TouchableOpacity> */}
+                                                <TouchableOpacity
+
+                                                    onPress={() => this.setState({ ModalVisible: false })}
+                                                >
+                                                    <Text style={{ color: 'lightgreen', fontSize: 25, fontWeight: 'bold' }}>Cancel</Text>
+                                                </TouchableOpacity>
+                                            </View>
+                                        </View>
+
+
+                                    </View>
+
+                                </View>
+
+                            </View>
+
+
+                        </Modal>
                     </View>
                 </KeyboardAwareScrollView>
             </TouchableWithoutFeedback>
@@ -265,7 +385,26 @@ const styles = StyleSheet.create({
         margin: 10,
         // flexDirection: 'row'
 
-    }
+    },
+    model: {
+        backgroundColor: "#3498db",
+        borderRadius: 20,
+        paddingHorizontal: 10
+    },
+    modelText: {
+        fontSize: 25,
+        fontWeight: 'bold',
+        alignSelf: 'center',
+        margin: 10,
+        color: 'white'
+    },
+    modelText2: {
+        fontSize: 25,
+        alignSelf: 'center',
+        textAlign: 'center',
+        marginTop: 10,
+        color: 'white'
+    },
 })
 
 const mapStateTOProps = state => {
@@ -273,7 +412,8 @@ const mapStateTOProps = state => {
     return {
         number: state.auth.mobileNumber,
         isLoading: state.auth.isLoading,
-        userArr: state.auth.userArr
+        userArr: state.auth.userArr,
+        allStudents: state.auth.allStudents
     }
 }
 export default connect(mapStateTOProps, {
