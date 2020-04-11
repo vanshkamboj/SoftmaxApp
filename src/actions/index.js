@@ -21,7 +21,8 @@ import {
     GET_MARKS,
     GET_GALLARY,
     Password_CHANGED,
-    GET_ALL_STUDENTS
+    GET_ALL_STUDENTS,
+    RESET
 } from "./types"
 import firebase from 'react-native-firebase'
 // import auth from '@react-native-firebase/auth'
@@ -473,6 +474,28 @@ export const getGallaryData = (school) => {
                 alert(error)
                 dispatch({ type: LOADING, payload: false })
             });
+
+    }
+}
+
+// export const reset = async (number, id) => {
+
+//     try {
+//         // const value = await AsyncStorage.getItem('islogin')
+//         await AsyncStorage.setItem('number', number)
+//         await AsyncStorage.setItem('pass', id)
+//         dispatch({ type: RESET, payload: true })
+//         Actions.Home()
+//     } catch (e) {
+//         // error reading value
+//         alert(e)
+//     }
+// }
+
+export const reset = () => {
+    return (dispatch) => {
+        dispatch({ type: RESET, payload: true })
+        Actions.Home()
 
     }
 }

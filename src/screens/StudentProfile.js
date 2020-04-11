@@ -17,7 +17,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { Actions } from 'react-native-router-flux'
 import { connect } from 'react-redux';
 import {
-    getProfile
+    getProfile,
+    reset
 } from "../actions"
 import Loading from "../components/loading"
 import AsyncStorage from '@react-native-community/async-storage'
@@ -34,13 +35,17 @@ class Profile extends Component {
         // this.props.otpChanged(null)
         // this.props.getProfile()
     }
+    // changeStudent = (number, id) => {
+    //     this.props.reset(number, id)
+    // }
     changeStudent = async (number, id) => {
 
         try {
             // const value = await AsyncStorage.getItem('islogin')
             await AsyncStorage.setItem('number', number)
             await AsyncStorage.setItem('pass', id)
-            Actions.Home()
+            this.props.reset()
+            // Actions.Home()
         } catch (e) {
             // error reading value
             alert(e)
@@ -273,8 +278,15 @@ class Profile extends Component {
                                             >
                                                 <TouchableOpacity
                                                     onPress={() => this.setState({ ModalVisible: true })}
+                                                    style={{ alignItems: 'center', justifyContent: 'center' }}
                                                 >
-                                                    <Text>select</Text>
+                                                    <Text style={{
+                                                        fontWeight: 'bold',
+                                                        // position: 'absolute',
+                                                        // right: 10
+                                                    }}>
+                                                        Click here
+                                            </Text>
                                                 </TouchableOpacity>
 
 
@@ -327,7 +339,7 @@ class Profile extends Component {
                                                                 this.changeStudent(item.mobile, item.student_id)
                                                             }}
                                                         >
-                                                            <Text style={{ fontSize: 18, marginLeft: 5 }}>{item.student_name}</Text>
+                                                            <Text style={{ marginLeft: 10 }}>{item.student_name}</Text>
                                                         </TouchableOpacity>
                                                     </View>
                                                 }
@@ -417,5 +429,6 @@ const mapStateTOProps = state => {
     }
 }
 export default connect(mapStateTOProps, {
-    getProfile
+    getProfile,
+    reset
 })(Profile)

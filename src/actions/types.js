@@ -19,3 +19,4 @@ export const ABSENT_DATE_COUNT = 'ABSENT_DATE_COUNT'
 export const GET_MARKS = "GET_MARKS"
 export const GET_GALLARY = "GET_GALLARY"
 export const GET_ALL_STUDENTS = 'GET_ALL_STUDENTS'
+export const RESET = 'RESET'
