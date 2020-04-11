@@ -45,7 +45,7 @@ class Profile extends Component {
             await AsyncStorage.setItem('number', number)
             await AsyncStorage.setItem('pass', id)
             this.props.reset()
-            // Actions.Home()
+            Actions.Home()
         } catch (e) {
             // error reading value
             alert(e)
@@ -96,15 +96,28 @@ class Profile extends Component {
                                 marginTop: 10
                             }}>
                                 <View style={{ marginLeft: 10 }}>
-                                    <Image
-                                        source={require('../images/user.png')}
-                                        style={{
-                                            height: 100,
-                                            width: 100,
-                                            margin: 10,
-                                            resizeMode: 'contain',
-                                        }}
-                                    />
+                                    {this.props.studentPic == null ?
+                                        <Image
+                                            source={require('../images/user.png')}
+                                            style={{
+                                                height: 100,
+                                                width: 100,
+                                                margin: 10,
+                                                resizeMode: 'contain',
+                                            }}
+                                        />
+                                        :
+                                        <Image
+                                            source={{ uri: this.props.studentPic }}
+                                            style={{
+                                                height: 100,
+                                                width: 100,
+                                                margin: 10,
+                                                resizeMode: 'contain',
+                                            }}
+                                        />
+                                    }
+
                                 </View>
                             </View>
                         </View>
@@ -425,7 +438,8 @@ const mapStateTOProps = state => {
         number: state.auth.mobileNumber,
         isLoading: state.auth.isLoading,
         userArr: state.auth.userArr,
-        allStudents: state.auth.allStudents
+        allStudents: state.auth.allStudents,
+        studentPic: state.auth.studentPic
     }
 }
 export default connect(mapStateTOProps, {

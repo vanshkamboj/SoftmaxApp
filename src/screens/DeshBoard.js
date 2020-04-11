@@ -21,7 +21,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { Actions } from 'react-native-router-flux'
 import { connect } from 'react-redux';
 import {
-    getProfile
+    getProfile,
+    reset
 } from "../actions"
 import Loading from "../components/loading"
 import TextTicker from 'react-native-text-ticker'
@@ -35,11 +36,11 @@ class DeshBoard extends Component {
     componentDidMount() {
         changeNavigationBarColor('#2a017d')
         // this.props.otpChanged(null)
-        // if (this.props.userArr == null) {
-        // this.props.getProfile(this.props.number, this.props.pass)
-        this.getData()
-        // this.props.getNotice(this.props.userArr[0].school_name)
-        // }
+        if (this.props.userArr == null) {
+            // this.props.getProfile(this.props.number, this.props.pass)
+            this.getData()
+            // this.props.getNotice(this.props.userArr[0].school_name)
+        }
         BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
     }
     componentWillUnmount() {
@@ -60,6 +61,7 @@ class DeshBoard extends Component {
     }
     signOut = () => {
         AsyncStorage.setItem('islogin', "false")
+        this.props.reset()
 
         Actions.login()
 
@@ -189,18 +191,18 @@ class DeshBoard extends Component {
                                 </View>
                                 <View style={{
                                     // width: screenWidth,
-                                    alignItems: 'center',
+                                    alignItems: 'flex-start',
                                     // justifyContent: 'center',
                                     // backgroundColor: 'red',
                                     paddingHorizontal: 2,
                                     width: screenWidth / 1.5,
-                                    marginLeft: 10
+                                    marginLeft: 30
                                 }}>
                                     <Text style={{ color: 'white', fontSize: 25 }}>
                                         {this.props.userArr !== null ? userArr[0].school_name : null}
 
                                     </Text>
-                                    <Text style={{ color: '#e0ae16', fontSize: 18 }}>
+                                    <Text style={{ color: '#e0ae16', fontSize: 18, fontWeight: 'bold' }}>
                                         {this.props.userArr !== null ? userArr[0].student_name : null}
                                         {/* width: screenHeight / 3  */}
                                     </Text>
@@ -438,7 +440,7 @@ const mapStateTOProps = state => {
     // console.log(state)
     return {
         number: state.auth.mobileNumber,
-        isLoading: state.auth.isLoading,
+        isLoading: state.auth.isLoading2,
         userArr: state.auth.userArr,
         notice: state.auth.notice,
         schoolLogoUrl: state.auth.schoolLogoUrl,
@@ -446,5 +448,6 @@ const mapStateTOProps = state => {
     }
 }
 export default connect(mapStateTOProps, {
-    getProfile
+    getProfile,
+    reset
 })(DeshBoard)
