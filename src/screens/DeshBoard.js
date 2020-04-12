@@ -62,9 +62,7 @@ class DeshBoard extends Component {
     signOut = () => {
         AsyncStorage.setItem('islogin', "false")
         this.props.reset()
-
         Actions.login()
-
     }
     getData = async () => {
 

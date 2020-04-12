@@ -96,7 +96,7 @@ export const logInUser = (number, pass) => {
                 Actions.Home()
             })
             .catch((error) => {
-                console.error(error);
+                // console.error(error);
                 alert(error)
                 dispatch({ type: LOADING, payload: false })
             });
@@ -213,12 +213,16 @@ export const getProfile = (number, pass) => {
                                             dispatch({ type: GET_SCHOOL_LOGO, payload: "https://softmax.info/images/" + school_name + "/logo.png" })
                                         // alert(school_name)
                                         // dispatch({ type: LOADING, payload: false })
-                                        fetch("https://softmax.info/uploaded/" + school_name + "/Photos/" + pass + ".jpg")
+                                        fetch("https://softmax.info/images/" + userInfo[0].school_name + "/" + pass + ".jpg")
                                             // .then((response) => response.json())
                                             .then((url) => {
                                                 // console.log(url.ok)
-                                                if (url.ok == true)
-                                                    dispatch({ type: GET_STUDENT_PIC, payload: "https://softmax.info/uploaded/" + school_name + "/Photos/" + pass + ".jpg" })
+                                                if (url.ok == true) {
+                                                    // alert("okay")
+                                                    dispatch({ type: GET_STUDENT_PIC, payload: "https://softmax.info/images/" + userInfo[0].school_name + "/" + pass + ".jpg" })
+
+
+                                                }
                                                 // alert(school_name)
                                                 // dispatch({ type: LOADING, payload: false })
 
@@ -284,7 +288,7 @@ export const getBooks = (clas, medium) => {
                 // }
             })
             .catch((error) => {
-                console.error(error);
+                // console.error(error);
                 alert(error)
                 dispatch({ type: LOADING, payload: false })
             });
@@ -318,7 +322,7 @@ export const getBooksSubject = (clas, medium, subject) => {
                 // }
             })
             .catch((error) => {
-                console.error(error);
+                // console.error(error);
                 alert(error)
                 dispatch({ type: LOADING, payload: false })
             });
@@ -370,13 +374,13 @@ export const getDairyPics = (clas, school) => {
 
                     //     })
                     .catch((error) => {
-                        console.error(error);
+                        // console.error(error);
                         alert(error)
                         dispatch({ type: LOADING, payload: false })
                     });
             })
             .catch((error) => {
-                console.error(error);
+                // console.error(error);
                 alert(error)
                 dispatch({ type: LOADING, payload: false })
             });
@@ -396,7 +400,7 @@ export const getHomeworkFromDate = (clas, school, date) => {
                 dispatch({ type: LOADING, payload: false })
             })
             .catch((error) => {
-                console.error(error);
+                // console.error(error);
                 alert(error)
                 dispatch({ type: LOADING, payload: false })
             });
@@ -431,7 +435,7 @@ export const getAttendance = (rollNumber, school) => {
                 // }
             })
             .catch((error) => {
-                console.error(error);
+                // console.error(error);
                 alert(error)
                 dispatch({ type: LOADING, payload: false })
             });
@@ -459,7 +463,7 @@ export const getMarks = (school, rollnum) => {
                 // }
             })
             .catch((error) => {
-                console.error(error);
+                // console.error(error);
                 alert(error)
                 dispatch({ type: LOADING, payload: false })
             });
@@ -487,7 +491,7 @@ export const getGallaryData = (school) => {
                 // }
             })
             .catch((error) => {
-                console.error(error);
+                // console.error(error);
                 alert(error)
                 dispatch({ type: LOADING, payload: false })
             });

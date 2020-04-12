@@ -7,6 +7,7 @@ import {
     FlatList,
     Dimensions,
     StatusBar,
+    BackHandler
 } from "react-native"
 import { connect } from 'react-redux'
 import { Actions } from 'react-native-router-flux'
@@ -23,9 +24,18 @@ class DairyPics extends Component {
     //     this.state = { visible: true };
     // }
     componentDidMount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
         let { userArr } = this.props
         if (this.props.dairyPics == null)
             this.props.getDairyPics(userArr[0].class, userArr[0].school_name)
+
+    }
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+    }
+    onBackPress = () => {
+        // Actions.Home()
+        return true;
     }
 
     render() {

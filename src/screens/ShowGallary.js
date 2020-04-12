@@ -6,7 +6,8 @@ import {
     Image,
     ActivityIndicator,
     Dimensions,
-    StatusBar
+    StatusBar,
+    BackHandler
 } from "react-native";
 import { WebView } from 'react-native-webview'
 import { connect } from 'react-redux'
@@ -25,6 +26,18 @@ class ShowGallary extends Component {
 
     hideSpinner() {
         this.setState({ visible: false });
+    }
+    componentDidMount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+        // let ext = this.props.image.split('.').pop()
+        // this.props.getDairyPics(userArr[0].class, userArr[0].school_name)
+    }
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+    }
+    onBackPress = () => {
+        Actions.gallary()
+        return true;
     }
     render() {
         // alert(this.props.uri)

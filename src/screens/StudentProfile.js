@@ -110,8 +110,8 @@ class Profile extends Component {
                                         <Image
                                             source={{ uri: this.props.studentPic }}
                                             style={{
-                                                height: 100,
-                                                width: 100,
+                                                height: 150,
+                                                width: 150,
                                                 margin: 10,
                                                 resizeMode: 'contain',
                                             }}
@@ -131,7 +131,7 @@ class Profile extends Component {
                         }}>
 
 
-                            <View style={{ position: 'absolute', bottom: 150 }} >
+                            <View style={{ position: 'absolute', bottom: 80 }} >
                                 <View
                                     style={styles.cards}
                                 >
@@ -295,6 +295,7 @@ class Profile extends Component {
                                                 >
                                                     <Text style={{
                                                         fontWeight: 'bold',
+                                                        fontSize: 20
                                                         // position: 'absolute',
                                                         // right: 10
                                                     }}>
@@ -403,7 +404,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 10,
         backgroundColor: 'white',
         width: screenWidth / 1.1,
-        height: screenHeight / 1.9,
+        height: screenHeight / 1.7,
         // alignItems: 'center',
         // justifyContent: 'center',
         // padding: 10,

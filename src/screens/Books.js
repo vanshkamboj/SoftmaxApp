@@ -7,6 +7,8 @@ import {
     FlatList,
     Dimensions,
     StatusBar,
+    BackHandler,
+    Alert
 } from "react-native"
 import { connect } from 'react-redux'
 import { Actions } from 'react-native-router-flux'
@@ -25,6 +27,14 @@ class Books extends Component {
         let { userArr } = this.props
         if (this.props.Books == null)
             this.props.getBooks(userArr[0].class, userArr[0].medium)
+        BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+    }
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+    }
+    onBackPress = () => {
+        Actions.Home()
+        return true;
     }
 
     render() {

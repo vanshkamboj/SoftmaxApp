@@ -10,7 +10,9 @@ import {
     TextInput,
     StatusBar,
     Image,
-    ActivityIndicator
+    ActivityIndicator,
+    BackHandler,
+    Alert
 } from 'react-native'
 import changeNavigationBarColor, {
     hideNavigationBar,
@@ -45,6 +47,24 @@ class signIn extends Component {
     componentDidMount() {
         changeNavigationBarColor('#2a017d')
         this.getData()
+        BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
+    }
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+    }
+    onBackPress = () => {
+        Alert.alert(
+            'Exit',
+            'Are you sure?',
+            [
+                { text: 'Yes', onPress: () => BackHandler.exitApp() },
+                { text: 'No', onPress: () => console.log('User not exit'), style: 'cancel' },
+            ],
+            {
+                cancelable: true
+            }
+        );
+        return true;
     }
     render() {
         let color = '#2a017d'
@@ -72,7 +92,7 @@ class signIn extends Component {
                                 }}
                             />
                             <Text style={{
-                                fontSize: 22,
+                                // fontSize: 18,
                                 color: '#e0ae16',
                                 fontWeight: 'bold',
                                 margin: 10

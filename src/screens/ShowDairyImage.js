@@ -7,7 +7,8 @@ import {
     FlatList,
     Dimensions,
     StatusBar,
-    ActivityIndicator
+    ActivityIndicator,
+    BackHandler
 } from "react-native"
 import { connect } from 'react-redux'
 import { Actions } from 'react-native-router-flux'
@@ -37,29 +38,19 @@ class ShowDairyPics extends Component {
     //     this.state = { visible: true };
     // }
     componentDidMount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
         let ext = this.props.image.split('.').pop()
-        // alert(ext)
-        // let { userArr } = this.props
-        // if (this.props.dairyPics == null)
-        //     this.props.getDairyPics(userArr[0].class, userArr[0].school_name)
+        let { userArr } = this.props
+        this.props.getDairyPics(userArr[0].class, userArr[0].school_name)
     }
-    // openFile = () => {
-    //     let url = "https://softmax.info/" + this.props.image
-    //     const localFile = `${RNFS.DocumentDirectoryPath}/temporaryfile.pdf`;
-    //     const options = {
-    //         fromUrl: url,
-    //         toFile: localFile
-    //     };
-    //     RNFS.downloadFile(options).promise
-    //         .then(() => FileViewer.open(localFile))
-    //         .then(() => {
-    //             // success
-    //             Actions.dairyPics()
-    //         })
-    //         .catch(error => {
-    //             // error
-    //         });
-    // }
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+    }
+    onBackPress = () => {
+        Actions.dairy()
+        return true;
+    }
+
 
     render() {
         let { userArr } = this.props
