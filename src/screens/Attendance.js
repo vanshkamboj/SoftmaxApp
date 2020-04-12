@@ -7,6 +7,8 @@ import {
     FlatList,
     Dimensions,
     StatusBar,
+    BackHandler,
+    Alert
 } from "react-native"
 import { connect } from 'react-redux'
 import { Actions } from 'react-native-router-flux'
@@ -27,8 +29,15 @@ class Attendance extends Component {
         // if (this.props.dairyPics == null)
         //     this.props.getDairyPics(userArr[0].class, userArr[0].school_name)
         this.props.getAttendance(userArr[0].student_id, userArr[0].school_name)
+        BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
     }
-
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+    }
+    onBackPress = () => {
+        Actions.Home()
+        return true;
+    }
     render() {
         let { userArr } = this.props
         let color = '#2a017d'

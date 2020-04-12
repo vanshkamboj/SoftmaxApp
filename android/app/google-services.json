@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:232824403070:android:9021f32545f391f823d42f",
         "android_client_info": {
-          "package_name": "com.vansh.softmax"
+          "package_name": "com.softmax.vansh.myapplication"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "232824403070-ak05a0o4m5mt8hibucfv9erlg8ijl2ne.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.vansh.softmax",
+            "package_name": "com.softmax.vansh.myapplication",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
@@ -26,7 +26,7 @@
           "client_id": "232824403070-768dsljdg8obca6lpnlpqj6oktfid8ut.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.vansh.softmax",
+            "package_name": "com.softmax.vansh.myapplication",
             "certificate_hash": "b4ff868e608e52996a40fd555e479bf4b764fe0a"
           }
         },
