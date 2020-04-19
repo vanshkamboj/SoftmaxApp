@@ -409,6 +409,8 @@ export const getHomeworkFromDate = (clas, school, date) => {
 
 }
 
+
+
 export const getAttendance = (rollNumber, school) => {
     let school_name = school.replace(/ /g, "%20")
     return (dispatch) => {

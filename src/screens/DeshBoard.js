@@ -37,7 +37,6 @@ class DeshBoard extends Component {
         changeNavigationBarColor('#2a017d')
         // this.props.otpChanged(null)
         if (this.props.userArr == null) {
-            // this.props.getProfile(this.props.number, this.props.pass)
             this.getData()
             // this.props.getNotice(this.props.userArr[0].school_name)
         }
@@ -59,13 +58,12 @@ class DeshBoard extends Component {
             }
         );
     }
-    signOut = () => {
-        AsyncStorage.setItem('islogin', "false")
+    signOut = async () => {
+        await AsyncStorage.setItem('islogin', "false")
         this.props.reset()
         Actions.login()
     }
     getData = async () => {
-
         try {
             const number = await AsyncStorage.getItem('number')
             const pass = await AsyncStorage.getItem('pass')

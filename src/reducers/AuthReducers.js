@@ -96,7 +96,9 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state, schoolLogoUrl: "https://softmax.info/images/school_logo_app.jpg",
                 userArr: null,
-                studentPic: null
+                studentPic: null,
+                mobileNumber: null,
+                password: null,
             }
         case GET_STUDENT_PIC:
             return { ...state, studentPic: action.payload }

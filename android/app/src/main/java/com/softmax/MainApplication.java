@@ -11,6 +11,8 @@ import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
+import com.jamesisaac.rnbackgroundtask.BackgroundTaskPackage;
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;  // <--- Import Package
 // import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 // import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 
@@ -30,7 +32,8 @@ public class MainApplication extends Application implements ReactApplication {
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
           packages.add(new RNFirebaseAuthPackage());
-          // packages.add(new RNFirebaseMessagingPackage());
+          // packages.add(new BackgroundTaskPackage());
+          // packages.add(new ReactNativePushNotificationPackage());
           // packages.add(new RNFirebaseNotificationsPackage());
           return packages;
         }
@@ -51,6 +54,8 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
     initializeFlipper(this); // Remove this line if you don't want Flipper enabled
+    // BackgroundTaskPackage.useContext(this);
+    BackgroundTaskPackage.useContext(this); 
   }
 
   /**
