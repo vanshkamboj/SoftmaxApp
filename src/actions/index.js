@@ -483,7 +483,7 @@ export const getGallaryData = (school) => {
             .then((response) => response.json())
             .then((gallary) => {
                 // return (dispatch) => {
-                // console.log(marks)
+                // console.log(gallary)
                 if (gallary[0] == 'failure') {
                     dispatch({ type: LOADING, payload: false })
                     return

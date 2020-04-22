@@ -72,7 +72,7 @@ class ShowHomeWork extends Component {
                                 margin: 10,
                                 alignItems: 'center'
                             }}>
-                                <Text style={{ color: 'white', fontSize: 20 }}>Home Work(Text)</Text>
+                                <Text style={{ color: 'white', fontSize: 20 }}>Home Work / Announcement</Text>
                                 <TouchableOpacity
                                     onPress={() => Actions.Home()}
                                     style={{

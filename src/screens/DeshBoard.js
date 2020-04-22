@@ -58,11 +58,11 @@ class DeshBoard extends Component {
             }
         );
     }
-    signOut = async () => {
-        await AsyncStorage.setItem('islogin', "false")
-        this.props.reset()
-        Actions.login()
-    }
+    // signOut = async () => {
+    //     await AsyncStorage.setItem('islogin', "false")
+    //     this.props.reset()
+    //     Actions.login()
+    // }
     getData = async () => {
         try {
             const number = await AsyncStorage.getItem('number')
@@ -74,14 +74,15 @@ class DeshBoard extends Component {
             // error reading value
         }
     }
-    // signOut = async () => {
-    //     try {
-    //         await AsyncStorage.setItem('islogin', "false")
-    //         Actions.login()
-    //     } catch (e) {
-    //         // saving error
-    //     }
-    // }
+    signOut = async () => {
+        try {
+            await AsyncStorage.setItem('islogin', "false")
+            this.props.reset()
+            Actions.login()
+        } catch (e) {
+            // saving error
+        }
+    }
     openPolicy = () => {
         Actions.policy()
     }
@@ -286,7 +287,7 @@ class DeshBoard extends Component {
 
                                         }}
                                     />
-                                    <Text style={{ fontWeight: 'bold' }}>Gallary</Text>
+                                    <Text style={{ fontWeight: 'bold' }}>Gallery</Text>
 
                                 </TouchableOpacity>
                             </View>
