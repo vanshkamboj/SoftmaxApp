@@ -4,14 +4,17 @@ import {
     Text,
     TouchableOpacity,
     Image,
-    FlatList,
     Dimensions,
     StatusBar,
     ActivityIndicator,
-    BackHandler
+    BackHandler,
+    StyleSheet,
+    ScrollView,
+    PixelRatio
 } from "react-native"
 import { connect } from 'react-redux'
 import { Actions } from 'react-native-router-flux'
+import YouTube, { YouTubeStandaloneIOS, YouTubeStandaloneAndroid } from 'react-native-youtube'
 import {
     getDairyPics
 } from "../actions"
@@ -27,7 +30,6 @@ const screenHeight = Math.round(Dimensions.get('window').height);
 class ShowDairyPics extends Component {
     constructor(props) {
         super(props);
-        this.state = { visible: true };
     }
 
     hideSpinner() {
@@ -39,7 +41,7 @@ class ShowDairyPics extends Component {
     // }
     componentDidMount() {
         BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
-        let ext = this.props.image.split('.').pop()
+        // let ext = this.props.image.split('.').pop()
         let { userArr } = this.props
         this.props.getDairyPics(userArr[0].class, userArr[0].school_name)
     }
@@ -50,13 +52,35 @@ class ShowDairyPics extends Component {
         Actions.dairy()
         return true;
     }
+    state = {
+        isReady: false,
+        status: null,
+        quality: null,
+        error: null,
+        isPlaying: true,
+        isLooping: true,
+        duration: 0,
+        currentTime: 0,
+        fullscreen: true,
+        playerWidth: Dimensions.get('window').width,
+        visible: true
+    };
+
+    _youTubeRef = React.createRef();
 
 
     render() {
         let { userArr } = this.props
+        let ext
         let color = '#2a017d'
-        let ext = this.props.image.split('.').pop()
-        // alert(ext)
+        if (this.props.image !== null && this.props.image !== " ") {
+            ext = this.props.image.split('.').pop()
+        } else {
+            ext = 'video'
+        }
+
+        console.log(this.props.image)
+        console.log(this.props.path)
         return (
             <View style={{ flex: 1 }}>
                 < StatusBar backgroundColor={color} barStyle='light-content' />
@@ -138,18 +162,56 @@ class ShowDairyPics extends Component {
                             startInLoadingState={true}
                             automaticallyAdjustContentInsets={true} />
                         :
-                        <WebView
-                            onLoad={() => this.hideSpinner()}
+                        ext == "pdf" || ext == "docx" || ext == "xlsx" || ext == "doc" ?
+                            <WebView
+                                onLoad={() => this.hideSpinner()}
 
-                            // source={{ uri: "https://softmax.info/" + this.props.image }}
-                            source={{ uri: "https://docs.google.com/gview?embedded=true&url=http://softmax.info/" + this.props.image }}
-                            style={{ flex: 2 }}
-                            scalesPageToFit={true}
-                            javaScriptEnabled={true}
-                            domStorageEnabled={true}
-                            decelerationRate="normal"
-                            startInLoadingState={true}
-                            automaticallyAdjustContentInsets={true} />
+                                // source={{ uri: "https://softmax.info/" + this.props.image }}
+                                source={{ uri: "https://docs.google.com/gview?embedded=true&url=http://softmax.info/" + this.props.image }}
+                                style={{ flex: 2 }}
+                                scalesPageToFit={true}
+                                javaScriptEnabled={true}
+                                domStorageEnabled={true}
+                                decelerationRate="normal"
+                                startInLoadingState={true}
+                                automaticallyAdjustContentInsets={true} /> :
+                            <YouTube
+                                ref={this._youTubeRef}
+                                // You must have an API Key for the player to load in Android
+                                apiKey="AIzaSyBLUq1fSTphnValWCrkA1rJjAzcZ3aBexw"
+                                // Un-comment one of videoId / videoIds / playlist.
+                                // You can also edit these props while Hot-Loading in development mode to see how
+                                // it affects the loaded native module
+                                videoId={this.props.path}
+                                // videoIds={['uMK0prafzw0', 'qzYgSecGQww', 'XXlZfc1TrD0', 'czcjU1w-c6k']}
+                                // playlistId="PLF797E961509B4EB5"
+                                play={this.state.isPlaying}
+                                loop={this.state.isLooping}
+                                fullscreen={this.state.fullscreen}
+                                controls={1}
+                                style={[
+                                    { height: PixelRatio.roundToNearestPixel(this.state.playerWidth / (14 / 9)) },
+                                    styles.player
+                                ]}
+                                onError={e => {
+                                    this.setState({ error: e.error });
+                                }}
+                                onReady={e => {
+                                    this.setState({ isReady: true, visible: false });
+                                }}
+                                onChangeState={e => {
+                                    this.setState({ status: e.state });
+                                }}
+                                onChangeQuality={e => {
+                                    this.setState({ quality: e.quality });
+                                }}
+                                // onChangeFullscreen={e => {
+                                //     this.setState({ fullscreen: e.isFullscreen });
+                                // }}
+                                onProgress={e => {
+                                    this.setState({ currentTime: e.currentTime });
+                                }}
+                            />
                     }
 
                     {/* // startInLoadingState={true}
@@ -189,6 +251,13 @@ class ShowDairyPics extends Component {
         )
     }
 }
+
+const styles = StyleSheet.create({
+    player: {
+        alignSelf: 'stretch',
+        marginVertical: 10,
+    },
+});
 
 
 const mapStateTOProps = state => {

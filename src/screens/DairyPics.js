@@ -41,6 +41,7 @@ class DairyPics extends Component {
     render() {
         let { userArr } = this.props
         let color = '#2a017d'
+        // console.log(this.props.dairyPics)
         return (
             <View style={{ flex: 1 }}>
                 < StatusBar backgroundColor={color} barStyle='light-content' />
@@ -95,7 +96,7 @@ class DairyPics extends Component {
                             <BooksList
                                 name={item.name}
                                 date={item.date}
-                                onSubjectSelect={() => Actions.dairyPics({ image: item.image })}
+                                onSubjectSelect={() => Actions.dairyPics({ image: item.image, path: item.path })}
                             />
                         }
                         keyExtractor={(index, item) => index + item}
