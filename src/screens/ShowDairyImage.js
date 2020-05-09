@@ -63,7 +63,8 @@ class ShowDairyPics extends Component {
         currentTime: 0,
         fullscreen: true,
         playerWidth: Dimensions.get('window').width,
-        visible: true
+        visible: true,
+        height: 301
     };
 
     _youTubeRef = React.createRef();
@@ -79,8 +80,8 @@ class ShowDairyPics extends Component {
             ext = 'video'
         }
 
-        console.log(this.props.image)
-        console.log(this.props.path)
+        // console.log(this.props.image)
+        // console.log(this.props.path)
         return (
             <View style={{ flex: 1 }}>
                 < StatusBar backgroundColor={color} barStyle='light-content' />
@@ -190,14 +191,15 @@ class ShowDairyPics extends Component {
                                 fullscreen={this.state.fullscreen}
                                 controls={1}
                                 style={[
-                                    { height: PixelRatio.roundToNearestPixel(this.state.playerWidth / (14 / 9)) },
-                                    styles.player
+                                    // { height: PixelRatio.roundToNearestPixel(this.state.playerWidth / (14 / 9)) },
+                                    { height: this.state.height },
+                                    styles.player,
                                 ]}
                                 onError={e => {
                                     this.setState({ error: e.error });
                                 }}
                                 onReady={e => {
-                                    this.setState({ isReady: true, visible: false });
+                                    this.setState({ isReady: true, visible: false, height: 299 });
                                 }}
                                 onChangeState={e => {
                                     this.setState({ status: e.state });
@@ -256,6 +258,7 @@ const styles = StyleSheet.create({
     player: {
         alignSelf: 'stretch',
         marginVertical: 10,
+        width: screenWidth
     },
 });
 

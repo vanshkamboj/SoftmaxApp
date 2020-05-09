@@ -58,9 +58,10 @@ class ShowGallary extends Component {
         isLooping: true,
         duration: 0,
         currentTime: 0,
-        fullscreen: false,
+        fullscreen: true,
         playerWidth: Dimensions.get('window').width,
-        visible: true
+        visible: true,
+        height: 301
     };
 
     _youTubeRef = React.createRef();
@@ -139,14 +140,18 @@ class ShowGallary extends Component {
                                     fullscreen={this.state.fullscreen}
                                     controls={1}
                                     style={[
-                                        { height: PixelRatio.roundToNearestPixel(this.state.playerWidth / (14 / 9)) },
+                                        // { height: PixelRatio.roundToNearestPixel(this.state.playerWidth / (14 / 9)) },
+                                        // { height: screenHeight / 3 },
+                                        { height: this.state.height },
                                         styles.player
                                     ]}
                                     onError={e => {
                                         this.setState({ error: e.error });
+                                        // alert(e)
+                                        console.log(e)
                                     }}
                                     onReady={e => {
-                                        this.setState({ isReady: true, visible: false });
+                                        this.setState({ isReady: true, visible: false, height: 299 });
                                     }}
                                     onChangeState={e => {
                                         this.setState({ status: e.state });
@@ -215,6 +220,7 @@ const styles = StyleSheet.create({
     player: {
         alignSelf: 'stretch',
         marginVertical: 10,
+        // width: screenWidth
     },
 });
 

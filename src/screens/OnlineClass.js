@@ -7,18 +7,19 @@ import {
     FlatList,
     Dimensions,
     StatusBar,
-    BackHandler
+    BackHandler,
+    Linking
 } from "react-native"
 import { connect } from 'react-redux'
 import { Actions } from 'react-native-router-flux'
 import {
-    getDairyPics
+    getZoomClass
 } from "../actions"
 import Loading from '../components/loading'
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
 
-class DairyPics extends Component {
+class OnlineClass extends Component {
     // constructor(props) {
     //     super(props);
     //     this.state = { visible: true };
@@ -27,7 +28,7 @@ class DairyPics extends Component {
         BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
         let { userArr } = this.props
         // if (this.props.dairyPics == null)
-        this.props.getDairyPics(userArr[0].class, userArr[0].school_name)
+        this.props.getZoomClass(userArr[0].class, userArr[0].school_name)
 
     }
     componentWillUnmount() {
@@ -39,9 +40,9 @@ class DairyPics extends Component {
     }
 
     render() {
-        let { userArr } = this.props
+        let { zoom } = this.props
         let color = '#2a017d'
-        // console.log(this.props.dairyPics)
+        // console.log(zoom)
         return (
             <View style={{ flex: 1 }}>
                 < StatusBar backgroundColor={color} barStyle='light-content' />
@@ -52,7 +53,7 @@ class DairyPics extends Component {
                         margin: 10,
                         alignItems: 'center'
                     }}>
-                        <Text style={{ color: 'white', fontSize: 20 }}>Dairy</Text>
+                        <Text style={{ color: 'white', fontSize: 20 }}>Online Class</Text>
                         <TouchableOpacity
                             onPress={() => Actions.Home()}
                             style={{
@@ -70,7 +71,7 @@ class DairyPics extends Component {
 
                         </TouchableOpacity>
                     </View>
-                    <View style={{
+                    {/* <View style={{
                         alignItems: 'center',
                         justifyContent: 'center',
                         margin: 10
@@ -80,7 +81,7 @@ class DairyPics extends Component {
                                 Total  {this.props.dairyPicsCount}  Images Found
                             </Text>
                         </View>
-                    </View>
+                    </View> */}
 
                 </View>
                 <View style={{
@@ -90,13 +91,15 @@ class DairyPics extends Component {
                     flex: 2
                 }}>
                     <FlatList
-                        data={this.props.dairyPics}
+                        data={zoom}
                         // numColumns={2}
                         renderItem={({ item, index }) =>
                             <BooksList
-                                name={item.name}
-                                date={item.date}
-                                onSubjectSelect={() => Actions.dairyPics({ image: item.image, path: item.path })}
+                                name={item.comment}
+                                date={item.meeting_date}
+                                time={item.meeting_timing}
+                                // onSubjectSelect={() => Actions.dairyPics({ image: item.image, path: item.path })}
+                                onSubjectSelect={() => Linking.openURL(item.zoom_url)}
                             />
                         }
                         keyExtractor={(index, item) => index + item}
@@ -132,7 +135,7 @@ class BooksList extends Component {
                     onPress={() => this.props.onSubjectSelect()}
                 >
                     <Image
-                        source={require('../images/gallery.png')}
+                        source={require('../images/zoom.png')}
                         style={{
                             height: 30,
                             width: 30,
@@ -152,6 +155,14 @@ class BooksList extends Component {
                             color: 'gray'
                         }}
                     >{this.props.date}</Text>
+                    <Text
+                        style={{
+                            position: 'absolute',
+                            right: 10,
+                            top: 30,
+                            color: 'gray',
+                        }}
+                    >{this.props.time}</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -163,10 +174,9 @@ const mapStateTOProps = state => {
         number: state.auth.mobileNumber,
         isLoading: state.auth.isLoading,
         userArr: state.auth.userArr,
-        dairyPics: state.auth.dairyPics,
-        dairyPicsCount: state.auth.dairyPicsCount
+        zoom: state.auth.zoom
     }
 }
 export default connect(mapStateTOProps, {
-    getDairyPics
-})(DairyPics)
+    getZoomClass
+})(OnlineClass)

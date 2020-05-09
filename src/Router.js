@@ -23,6 +23,7 @@ import Marks from './screens/ShowMarks';
 import Gallary from './screens/Gallary'
 import ShowGallary from './screens/ShowGallary'
 import Policy from './screens/Policy'
+import Zoom from './screens/OnlineClass'
 const RouerComponent = () => {
     return (
         <Router
@@ -94,6 +95,9 @@ const RouerComponent = () => {
                         hideNavBar={true}
                     />
                     <Scene key="policy" component={Policy}
+                        hideNavBar={true}
+                    />
+                    <Scene key="zoom" component={Zoom}
                         hideNavBar={true}
                     />
                 </Scene>

@@ -380,6 +380,32 @@ class DeshBoard extends Component {
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     style={styles.cards}
+                                    onPress={() => Actions.zoom()}
+                                >
+                                    <Image
+                                        source={require('../images/zoom.png')}
+                                        style={{
+                                            height: 50,
+                                            width: 50,
+                                            margin: 10,
+                                            resizeMode: 'contain',
+
+                                        }}
+                                    />
+                                    <Text style={{ fontWeight: 'bold' }}>Online Class</Text>
+
+                                </TouchableOpacity>
+                            </View>
+
+
+
+
+
+                            <View style={{ flexDirection: 'row' }} >
+
+
+                                <TouchableOpacity
+                                    style={styles.cards}
                                     onPress={() => Actions.syllabus({ filename: "Time_table.jpg" })}
                                 >
                                     <Image

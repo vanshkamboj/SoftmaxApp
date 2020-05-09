@@ -24,7 +24,8 @@ import {
     GET_ALL_STUDENTS,
     RESET,
     GET_STUDENT_PIC,
-    LOADING2
+    LOADING2,
+    GET_ZOOM_CLASS
 } from "./types"
 import firebase from 'react-native-firebase'
 // import auth from '@react-native-firebase/auth'
@@ -521,6 +522,44 @@ export const reset = () => {
         // Actions.Home()
     }
 }
+
+
+export const getZoomClass = (clas, school) => {
+    let school_name = school.replace(/ /g, "%20")
+    return (dispatch) => {
+        dispatch({ type: LOADING, payload: true })
+        fetch("https://softmax.info/get_zoomClass.php?school=" + school_name + "&class=" + clas)
+            .then((response) => response.json())
+            .then((links) => {
+                // console.log(links)
+                if (links[0] == 'failure') {
+                    // alert("please enter valid mobile number and password")
+                    dispatch({ type: LOADING, payload: false })
+                    return
+                }
+                // return (dispatch) => {
+                // console.log(Books)
+                dispatch({ type: GET_ZOOM_CLASS, payload: links })
+                // let key, count = 0
+                // for (key in links) {
+                //     if (links.hasOwnProperty(key)) {
+                //         count++
+                //     }
+                // }
+                // dispatch({ type: BOOKS_COUNT, payload: count })
+                dispatch({ type: LOADING, payload: false })
+                // }
+            })
+            .catch((error) => {
+                // console.error(error);
+                alert(error)
+                dispatch({ type: LOADING, payload: false })
+            });
+
+    }
+}
+
+
 
 // storeData = async () => {
 //     try {

@@ -22,3 +22,4 @@ export const GET_ALL_STUDENTS = 'GET_ALL_STUDENTS'
 export const RESET = 'RESET'
 export const GET_STUDENT_PIC = 'GET_STUDENT_PIC'
 export const LOADING2 = "LOADING2"
+export const GET_ZOOM_CLASS = 'get_zoom_class'
