@@ -24,6 +24,7 @@ import Gallary from './screens/Gallary'
 import ShowGallary from './screens/ShowGallary'
 import Policy from './screens/Policy'
 import Zoom from './screens/OnlineClass'
+import Splesh from './screens/SpleshScreen'
 const RouerComponent = () => {
     return (
         <Router
@@ -33,13 +34,18 @@ const RouerComponent = () => {
         >
             <Scene key="root" hideNavBar>
                 <Scene key="auth">
+                    <Scene key="Splesh" component={Splesh}
+                        initial
+                        // renderRightButton={InboxIcon}
+                        hideNavBar={true}
+                    />
                     <Scene key="Home" component={Home}
                         // initial
                         // renderRightButton={InboxIcon}
                         hideNavBar={true}
                     />
                     <Scene key="login" component={Signin}
-                        initial
+                        // initial
                         // renderRightButton={InboxIcon}
                         hideNavBar={true}
                     />

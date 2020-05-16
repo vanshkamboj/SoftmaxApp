@@ -35,6 +35,13 @@ export default class PushController extends Component {
             onNotification: function (notification) {
                 console.log("NOTIFICATION:", notification);
 
+                PushNotification.localNotification({
+
+                    /* iOS and Android properties */
+                    title: "Home Work", // (optional)
+                    message: "Check HomeWork from Dairy", // (required)
+                    // actions: '["Yes", "No"]',  // (Android only) See the doc for notification actions to know more
+                });
                 // process the notification here
 
                 // required on iOS only 

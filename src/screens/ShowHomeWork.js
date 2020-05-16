@@ -24,12 +24,28 @@ const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
 
 class ShowHomeWork extends Component {
+
     state = {
         date: new Date(),
         ModalVisible: false,
         selectedDate: null
     }
     componentDidMount() {
+        // var today = new Date()
+        // var dd = today.getDate();
+
+        // var mm = today.getMonth() + 1;
+        // var yyyy = today.getFullYear();
+        // if (dd < 10) {
+        //     dd = '0' + dd;
+        // }
+
+        // if (mm < 10) {
+        //     mm = '0' + mm;
+        // }
+        // // today = mm + '-' + dd + '-' + yyyy
+        // today = yyyy + '-' + mm + '-' + dd
+        // this.setState({ selectedDate: today })
         let { userArr } = this.props
         // if (this.props.homework == null)
         this.props.getDairyPics(userArr[0].class, userArr[0].school_name)
@@ -47,7 +63,8 @@ class ShowHomeWork extends Component {
         if (mm < 10) {
             mm = '0' + mm;
         }
-        today = mm + '-' + dd + '-' + yyyy
+        // today = mm + '-' + dd + '-' + yyyy
+        today = yyyy + '-' + mm + '-' + dd
         this.setState({ selectedDate: today })
         // alert(today)
     }
@@ -119,7 +136,24 @@ class ShowHomeWork extends Component {
                                     >
 
                                         <TouchableOpacity
-                                            onPress={() => this.setState({ ModalVisible: true })}
+                                            onPress={() => {
+                                                var today = new Date()
+                                                var dd = today.getDate();
+
+                                                var mm = today.getMonth() + 1;
+                                                var yyyy = today.getFullYear();
+                                                if (dd < 10) {
+                                                    dd = '0' + dd;
+                                                }
+
+                                                if (mm < 10) {
+                                                    mm = '0' + mm;
+                                                }
+                                                // today = mm + '-' + dd + '-' + yyyy
+                                                today = yyyy + '-' + mm + '-' + dd
+                                                // this.setState({  })
+                                                this.setState({ ModalVisible: true, selectedDate: today })
+                                            }}
                                         >
                                             <Text style={{ fontWeight: 'bold' }}>Click here to Select Homework date</Text>
 
@@ -172,7 +206,7 @@ class ShowHomeWork extends Component {
                                         <View style={styles.model}>
                                             <Text style={styles.modelText}>Select Date</Text>
                                             <DatePicker
-                                                style={{ width: screenWidth / 2, alignSelf: 'center' }}
+                                                style={{ width: screenWidth / 1.5, alignSelf: 'center' }}
                                                 date={this.state.date}
                                                 // onDateChange={(date) => this.setState({ date: date })}
                                                 onDateChange={(date) => this.getDate(date)}
