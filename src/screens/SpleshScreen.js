@@ -8,43 +8,31 @@ import changeNavigationBarColor, {
 } from 'react-native-navigation-bar-color'
 
 export default class Splesh extends Component {
-    // getData = async () => {
 
-    //     try {
-    //         const value = await AsyncStorage.getItem('islogin')
-    //         if (value !== null) {
-    //             if (value == "true")
-    //                 Actions.Home()
-    //             else
-    //                 Actions.login()
-    //         }
-    //     } catch (e) {
-    //         // error reading value
-    //     }
-    // }
     componentDidMount() {
-        changeNavigationBarColor('#2a017d')
         setTimeout(async () => {
+            Actions.login()
 
             // getData = async () => {
 
-            try {
-                const value = await AsyncStorage.getItem('islogin')
-                if (value !== null) {
-                    if (value == "true")
-                        Actions.Home()
-                }
-                else
-                    Actions.login()
-            } catch (e) {
-                alert(e)
-            }
+            // try {
+            //     const value = await AsyncStorage.getItem('islogin')
+            //     if (value !== null) {
+            //         if (value == "true")
+            //             Actions.Home()
+            //     }
+            //     else
+            //         Actions.login()
+            // } catch (e) {
+            //     alert(e)
+            // }
             // }
             // this.getData()
         }, 3000);
     }
 
     render() {
+        changeNavigationBarColor('#2a017d')
         return (
             <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1, backgroundColor: '#2a017d' }}>
                 <Image
