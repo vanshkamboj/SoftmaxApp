@@ -22,7 +22,8 @@ import { Actions } from 'react-native-router-flux'
 import { connect } from 'react-redux';
 import {
     getProfile,
-    reset
+    reset,
+    saveUserTime
 } from "../actions"
 import Loading from "../components/loading"
 import TextTicker from 'react-native-text-ticker'
@@ -67,6 +68,7 @@ class DeshBoard extends Component {
         try {
             const number = await AsyncStorage.getItem('number')
             const pass = await AsyncStorage.getItem('pass')
+            // saveUserTime(this.props.pass, this.props.number, new Date())
             if (number !== null) {
                 this.props.getProfile(number, pass)
             }
@@ -84,7 +86,8 @@ class DeshBoard extends Component {
         }
     }
     openPolicy = () => {
-        Actions.policy()
+        // Actions.policy()
+        saveUserTime('13024', '7017165652', new Date())
     }
     onBackPress = () => {
         Alert.alert(
@@ -103,7 +106,8 @@ class DeshBoard extends Component {
     render() {
         // console.log(this.props.userArr[0].school_name)
         let color = '#2a017d'
-        let { userArr } = this.props
+        let { userArr, pass, number } = this.props
+        // saveUserTime('13024', '7017165652', new Date())
         // changeNavigationBarColor(color)
         // hideNavigationBar()
         // console.log(this.props.schoolLogoUrl)

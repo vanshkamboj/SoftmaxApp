@@ -12,22 +12,6 @@ export default class Splesh extends Component {
     componentDidMount() {
         setTimeout(async () => {
             Actions.login()
-
-            // getData = async () => {
-
-            // try {
-            //     const value = await AsyncStorage.getItem('islogin')
-            //     if (value !== null) {
-            //         if (value == "true")
-            //             Actions.Home()
-            //     }
-            //     else
-            //         Actions.login()
-            // } catch (e) {
-            //     alert(e)
-            // }
-            // }
-            // this.getData()
         }, 3000);
     }
 
