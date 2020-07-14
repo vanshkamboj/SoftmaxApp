@@ -560,7 +560,6 @@ export const getZoomClass = (clas, school) => {
 }
 
 export const saveUserTime = (rollNumber, mobile, time) => {
-    console.log(rollNumber, mobile, time)
     // let school_name = school.replace(/ /g, "%20")
     return (dispatch) => {
         // dispatch({ type: LOADING, payload: true })
@@ -568,25 +567,6 @@ export const saveUserTime = (rollNumber, mobile, time) => {
             .then((response) => response.json())
             .then((links) => {
                 console.log(links)
-                // alert(links)
-                // console.log(links)
-                // if (links[0] == 'failure') {
-                //     // alert("please enter valid mobile number and password")
-                //     dispatch({ type: LOADING, payload: false })
-                //     return
-                // }
-                // return (dispatch) => {
-                // console.log(Books)
-                // dispatch({ type: GET_ZOOM_CLASS, payload: links })
-                // // let key, count = 0
-                // // for (key in links) {
-                // //     if (links.hasOwnProperty(key)) {
-                // //         count++
-                // //     }
-                // // }
-                // // dispatch({ type: BOOKS_COUNT, payload: count })
-                // dispatch({ type: LOADING, payload: false })
-                // }
             })
             .catch((error) => {
                 console.log(error);
