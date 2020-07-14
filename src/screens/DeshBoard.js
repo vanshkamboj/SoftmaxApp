@@ -41,10 +41,15 @@ class DeshBoard extends Component {
             this.getData()
             // this.props.getNotice(this.props.userArr[0].school_name)
         }
+        if (this.props.userArr != null) {
+            this.getData()
+            saveUserTime(this.props.userArr[0].student_id, this.props.userArr[0].mobile, new Date().getTime())
+        }
         BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
     }
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+        saveUserTime(this.props.userArr[0].student_id, this.props.userArr[0].mobile, new Date().getTime())
     }
     logOutUser = () => {
         Alert.alert(
@@ -75,6 +80,7 @@ class DeshBoard extends Component {
         } catch (e) {
             // error reading value
         }
+        saveUserTime(this.props.userArr[0].student_id, this.props.userArr[0].mobile, new Date().getTime())
     }
     signOut = async () => {
         try {
@@ -86,8 +92,7 @@ class DeshBoard extends Component {
         }
     }
     openPolicy = () => {
-        // Actions.policy()
-        saveUserTime('13024', '7017165652', new Date())
+        Actions.policy()
     }
     onBackPress = () => {
         Alert.alert(
