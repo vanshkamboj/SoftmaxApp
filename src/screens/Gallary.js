@@ -45,7 +45,7 @@ class Gallary extends Component {
                         margin: 10,
                         alignItems: 'center'
                     }}>
-                        <Text style={{ color: 'white', fontSize: 20 }}>Gallary</Text>
+                        <Text style={{ color: 'white', fontSize: 20 }}>Gallery</Text>
                         <TouchableOpacity
                             onPress={() => Actions.Home()}
                             style={{

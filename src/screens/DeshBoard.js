@@ -22,7 +22,8 @@ import { Actions } from 'react-native-router-flux'
 import { connect } from 'react-redux';
 import {
     getProfile,
-    reset
+    reset,
+    saveUserTime
 } from "../actions"
 import Loading from "../components/loading"
 import TextTicker from 'react-native-text-ticker'
@@ -37,7 +38,6 @@ class DeshBoard extends Component {
         changeNavigationBarColor('#2a017d')
         // this.props.otpChanged(null)
         if (this.props.userArr == null) {
-            // this.props.getProfile(this.props.number, this.props.pass)
             this.getData()
             // this.props.getNotice(this.props.userArr[0].school_name)
         }
@@ -59,16 +59,16 @@ class DeshBoard extends Component {
             }
         );
     }
-    signOut = () => {
-        AsyncStorage.setItem('islogin', "false")
-        this.props.reset()
-        Actions.login()
-    }
+    // signOut = async () => {
+    //     await AsyncStorage.setItem('islogin', "false")
+    //     this.props.reset()
+    //     Actions.login()
+    // }
     getData = async () => {
-
         try {
             const number = await AsyncStorage.getItem('number')
             const pass = await AsyncStorage.getItem('pass')
+            // saveUserTime(this.props.pass, this.props.number, new Date())
             if (number !== null) {
                 this.props.getProfile(number, pass)
             }
@@ -76,16 +76,18 @@ class DeshBoard extends Component {
             // error reading value
         }
     }
-    // signOut = async () => {
-    //     try {
-    //         await AsyncStorage.setItem('islogin', "false")
-    //         Actions.login()
-    //     } catch (e) {
-    //         // saving error
-    //     }
-    // }
+    signOut = async () => {
+        try {
+            await AsyncStorage.setItem('islogin', "false")
+            this.props.reset()
+            Actions.login()
+        } catch (e) {
+            // saving error
+        }
+    }
     openPolicy = () => {
-        Actions.policy()
+        // Actions.policy()
+        saveUserTime('13024', '7017165652', new Date())
     }
     onBackPress = () => {
         Alert.alert(
@@ -104,7 +106,8 @@ class DeshBoard extends Component {
     render() {
         // console.log(this.props.userArr[0].school_name)
         let color = '#2a017d'
-        let { userArr } = this.props
+        let { userArr, pass, number } = this.props
+        // saveUserTime('13024', '7017165652', new Date())
         // changeNavigationBarColor(color)
         // hideNavigationBar()
         // console.log(this.props.schoolLogoUrl)
@@ -288,7 +291,7 @@ class DeshBoard extends Component {
 
                                         }}
                                     />
-                                    <Text style={{ fontWeight: 'bold' }}>Gallary</Text>
+                                    <Text style={{ fontWeight: 'bold' }}>Gallery</Text>
 
                                 </TouchableOpacity>
                             </View>
@@ -379,6 +382,32 @@ class DeshBoard extends Component {
                                     <Text style={{ fontWeight: 'bold' }}>Notice Board</Text>
 
                                 </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={styles.cards}
+                                    onPress={() => Actions.zoom()}
+                                >
+                                    <Image
+                                        source={require('../images/zoom.png')}
+                                        style={{
+                                            height: 50,
+                                            width: 50,
+                                            margin: 10,
+                                            resizeMode: 'contain',
+
+                                        }}
+                                    />
+                                    <Text style={{ fontWeight: 'bold' }}>Online Class</Text>
+
+                                </TouchableOpacity>
+                            </View>
+
+
+
+
+
+                            <View style={{ flexDirection: 'row' }} >
+
+
                                 <TouchableOpacity
                                     style={styles.cards}
                                     onPress={() => Actions.syllabus({ filename: "Time_table.jpg" })}

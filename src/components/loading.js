@@ -3,10 +3,17 @@ import {
     View,
     ActivityIndicator,
     Modal,
+    Dimensions
 } from 'react-native';
+const screenWidth = Math.round(Dimensions.get('window').width);
+const screenHeight = Math.round(Dimensions.get('window').height);
 export default class Loading extends Component {
     render() {
         return (
+            // <ActivityIndicator
+            //     style={{}}
+            //     size="large"
+            // />
             <Modal
                 animationType="fade"
                 transparent={true}
@@ -23,6 +30,12 @@ export default class Loading extends Component {
                 </View>
 
             </Modal>
+            // <View style={{ flex: 1 }}>
+            //     <ActivityIndicator
+            //         style={{}}
+            //         size="large"
+            //     />
+            // </View>
 
         )
     }

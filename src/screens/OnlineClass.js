@@ -8,38 +8,41 @@ import {
     Dimensions,
     StatusBar,
     BackHandler,
-    Alert
+    Linking
 } from "react-native"
 import { connect } from 'react-redux'
 import { Actions } from 'react-native-router-flux'
 import {
-    getBooks
+    getZoomClass
 } from "../actions"
+import Loading from '../components/loading'
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
 
-class Books extends Component {
+class OnlineClass extends Component {
     // constructor(props) {
     //     super(props);
     //     this.state = { visible: true };
     // }
     componentDidMount() {
-        let { userArr } = this.props
-        if (this.props.Books == null)
-            this.props.getBooks(userArr[0].class, userArr[0].medium)
         BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+        let { userArr } = this.props
+        // if (this.props.dairyPics == null)
+        this.props.getZoomClass(userArr[0].class, userArr[0].school_name)
+
     }
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
     }
     onBackPress = () => {
-        Actions.Home()
+        // Actions.Home()
         return true;
     }
 
     render() {
-        let { userArr } = this.props
+        let { zoom } = this.props
         let color = '#2a017d'
+        // console.log(zoom)
         return (
             <View style={{ flex: 1 }}>
                 < StatusBar backgroundColor={color} barStyle='light-content' />
@@ -50,9 +53,9 @@ class Books extends Component {
                         margin: 10,
                         alignItems: 'center'
                     }}>
-                        <Text style={{ color: 'white', fontSize: 20 }}>Books</Text>
+                        <Text style={{ color: 'white', fontSize: 20 }}>Online Class</Text>
                         <TouchableOpacity
-                            onPress={() => Actions.E_learning()}
+                            onPress={() => Actions.Home()}
                             style={{
                                 position: 'absolute',
                                 left: 10
@@ -68,17 +71,17 @@ class Books extends Component {
 
                         </TouchableOpacity>
                     </View>
-                    <View style={{
+                    {/* <View style={{
                         alignItems: 'center',
                         justifyContent: 'center',
                         margin: 10
                     }}>
                         <View style={{ marginLeft: 10 }}>
                             <Text style={{ color: 'white', fontSize: 25 }}>
-                                Total  {this.props.BooksCount}  Books Found
+                                Total  {this.props.dairyPicsCount}  Images Found
                             </Text>
                         </View>
-                    </View>
+                    </View> */}
 
                 </View>
                 <View style={{
@@ -88,12 +91,15 @@ class Books extends Component {
                     flex: 2
                 }}>
                     <FlatList
-                        data={this.props.Books}
+                        data={zoom}
                         // numColumns={2}
                         renderItem={({ item, index }) =>
                             <BooksList
-                                subject={item.subject}
-                                onSubjectSelect={() => Actions.BooksSubject({ subject: item.subject })}
+                                name={item.comment}
+                                date={item.meeting_date}
+                                time={item.meeting_timing}
+                                // onSubjectSelect={() => Actions.dairyPics({ image: item.image, path: item.path })}
+                                onSubjectSelect={() => Linking.openURL(item.zoom_url)}
                             />
                         }
                         keyExtractor={(index, item) => index + item}
@@ -101,6 +107,9 @@ class Books extends Component {
 
                     </FlatList>
 
+                </View>
+                <View>
+                    {this.props.isLoading ? <Loading /> : null}
                 </View>
 
             </View>
@@ -126,7 +135,7 @@ class BooksList extends Component {
                     onPress={() => this.props.onSubjectSelect()}
                 >
                     <Image
-                        source={require('../images/e-book.png')}
+                        source={require('../images/zoom.png')}
                         style={{
                             height: 30,
                             width: 30,
@@ -135,10 +144,25 @@ class BooksList extends Component {
                         }}
                     />
                     <Text style={{
-                        fontSize: 20,
+                        fontSize: 15,
                         fontWeight: 'bold',
                         marginLeft: 10
-                    }}>{this.props.subject}</Text>
+                    }}>{this.props.name}</Text>
+                    <Text
+                        style={{
+                            position: 'absolute',
+                            right: 10,
+                            color: 'gray'
+                        }}
+                    >{this.props.date}</Text>
+                    <Text
+                        style={{
+                            position: 'absolute',
+                            right: 10,
+                            top: 30,
+                            color: 'gray',
+                        }}
+                    >{this.props.time}</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -150,10 +174,9 @@ const mapStateTOProps = state => {
         number: state.auth.mobileNumber,
         isLoading: state.auth.isLoading,
         userArr: state.auth.userArr,
-        Books: state.auth.books,
-        BooksCount: state.auth.booksCount
+        zoom: state.auth.zoom
     }
 }
 export default connect(mapStateTOProps, {
-    getBooks
-})(Books)
+    getZoomClass
+})(OnlineClass)

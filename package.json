@@ -1,6 +1,6 @@
 {
   "name": "Softmax",
-  "version": "4.0.0",
+  "version": "4.0.2",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -35,7 +35,8 @@
     "react-native-splash-screen": "^3.2.0",
     "react-native-text-ticker": "^1.0.0",
     "react-native-vector-icons": "^6.6.0",
-    "react-native-webview": "^9.1.1",
+    "react-native-webview": "^5.12.1",
+    "react-native-youtube": "^2.0.1",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0"

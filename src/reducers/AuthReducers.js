@@ -21,7 +21,8 @@ import {
     GET_ALL_STUDENTS,
     RESET,
     GET_STUDENT_PIC,
-    LOADING2
+    LOADING2,
+    GET_ZOOM_CLASS
 } from '../actions/types'
 const INITIAL_STATE = {
     mobileNumber: null,
@@ -45,7 +46,8 @@ const INITIAL_STATE = {
     password: null,
     allStudents: null,
     studentPic: null,
-    isLoading2: false
+    isLoading2: false,
+    zoom: null
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -92,11 +94,15 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, gallary: action.payload }
         case GET_ALL_STUDENTS:
             return { ...state, allStudents: action.payload }
+        case GET_ZOOM_CLASS:
+            return { ...state, zoom: action.payload }
         case RESET:
             return {
                 ...state, schoolLogoUrl: "https://softmax.info/images/school_logo_app.jpg",
                 userArr: null,
-                studentPic: null
+                studentPic: null,
+                mobileNumber: null,
+                password: null,
             }
         case GET_STUDENT_PIC:
             return { ...state, studentPic: action.payload }
