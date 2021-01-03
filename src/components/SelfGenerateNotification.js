@@ -12,7 +12,6 @@
 //     constructor() {
 //         super()
 
-
 //         PushNotification.configure({
 //             // (optional) Called when Token is generated (iOS and Android)
 //             onRegister: function (token) {
@@ -55,7 +54,6 @@
 //         // }, 1000);
 //         // this.startService()
 //     }
-
 
 //     async startService() {
 
@@ -101,8 +99,6 @@
 //         //     });
 //         // }, 1000);
 
-
-
 //         BackgroundFetch.configure({
 //             minimumFetchInterval: 1,     // <-- minutes (15 is minimum allowed)
 //             // Android options
@@ -132,9 +128,9 @@
 //                                 return
 //                             }
 //                             let homework = this.props.homewrok
-//                             let dairy = this.props.dairyPics
+//                             let Dairy = this.props.DairyPics
 //                             console.log(homework)
-//                             if (homework == Homework || dairy == pics) {
+//                             if (homework == Homework || Dairy == pics) {
 //                                 this.getPush()
 //                             }
 //                         })
@@ -184,7 +180,6 @@
 //         await VIForegroundService.stopService();
 //     }
 
-
 //     componentDidMount() {
 //         this.startService()
 //         // this.stopService()
@@ -205,7 +200,7 @@
 //         schoolLogoUrl: state.auth.schoolLogoUrl,
 //         pass: state.auth.password,
 //         homework: state.auth.homework,
-//         dairyPics: state.auth.dairyPics
+//         DairyPics: state.auth.DairyPics
 //     }
 // }
 // export default connect(mapStateTOProps, {

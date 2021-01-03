@@ -11,7 +11,6 @@
 // // const screenWidth = Math.round(Dimensions.get('window').width);
 // // const screenHeight = Math.round(Dimensions.get('window').height);
 
-
 // // export default class App extends React.Component {
 // //   constructor() {
 // //     super()
@@ -127,15 +126,12 @@
 // //   }
 // // }
 
-
 // import React, { Component } from 'react';
 // import { Platform, StyleSheet, Text, View, Button } from 'react-native';
 // import VIForegroundService from "@voximplant/react-native-foreground-service";
 // import PushController from './src/components/PushController'
 // import BackgroundFetch from "react-native-background-fetch";
 // import PushNotification from "react-native-push-notification";
-
-
 
 // // type Props = {};
 // export default class App extends Component {
@@ -160,7 +156,6 @@
 //       popInitialNotification: true,
 //       requestPermissions: true
 //     });
-
 
 //   }
 //   getPush = () => {
@@ -300,7 +295,6 @@
 //     //   delay: 500 // <-- milliseconds
 //     // });
 //   }
-
 
 //   render() {
 //     return (

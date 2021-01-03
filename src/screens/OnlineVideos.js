@@ -6,7 +6,8 @@ import {
     Image,
     ActivityIndicator,
     Dimensions,
-    StatusBar
+    StatusBar,
+    BackHandler
 } from "react-native";
 import { WebView } from 'react-native-webview'
 import { connect } from 'react-redux'
@@ -21,6 +22,17 @@ class OnlineVideos extends Component {
     constructor(props) {
         super(props);
         this.state = { visible: true };
+    }
+    componentDidMount() {
+
+        BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
+    }
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+    }
+    onBackPress = () => {
+        this.webview.goBack();
+        return true;
     }
 
     hideSpinner() {
@@ -70,6 +82,7 @@ class OnlineVideos extends Component {
                     </View>
                 </View>
                 <WebView
+                    ref={r => this.webview = r}
                     onLoad={() => this.hideSpinner()}
                     source={{ uri: 'https://softmax.info/Schools/' + userArr[0].school_name + '/' + userArr[0].class + '.php' }}
                     style={{ flex: 2 }}
