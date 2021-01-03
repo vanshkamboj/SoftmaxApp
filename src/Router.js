@@ -66,7 +66,7 @@ const RouerComponent = () => {
           />
           <Scene key="ViewBook" component={ViewBook} hideNavBar={true} />
           <Scene key="homeWork" component={HomeWork} hideNavBar={true} />
-          <Scene key="Dairy" component={DairyPics} hideNavBar={true} />
+          <Scene key="Diary" component={DairyPics} hideNavBar={true} />
           <Scene key="DairyPics" component={ShowDairyPics} hideNavBar={true} />
           <Scene key="notice" component={NoticeBoard} hideNavBar={true} />
           <Scene key="attendance" component={Attendance} hideNavBar={true} />

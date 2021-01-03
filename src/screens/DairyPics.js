@@ -13,6 +13,7 @@ import {connect} from 'react-redux';
 import {Actions} from 'react-native-router-flux';
 import {getDairyPics} from '../actions';
 import Loading from '../components/loading';
+// import {useNavigation, useRoute, RouteProp} from '@react-navigation/native';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
 
@@ -21,6 +22,7 @@ class DairyPics extends Component {
   //     super(props);
   //     this.state = { visible: true };
   // }
+  // navigation = useNavigation();
   componentDidMount() {
     BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
     let {userArr} = this.props;
@@ -50,7 +52,7 @@ class DairyPics extends Component {
               margin: 10,
               alignItems: 'center',
             }}>
-            <Text style={{color: 'white', fontSize: 20}}>Dairy</Text>
+            <Text style={{color: 'white', fontSize: 20}}>Diary</Text>
             <TouchableOpacity
               onPress={() => Actions.Home()}
               style={{

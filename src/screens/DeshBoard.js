@@ -336,7 +336,7 @@ class DeshBoard extends Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.cards}
-                  onPress={() => Actions.Dairy()}>
+                  onPress={() => Actions.Diary()}>
                   <Image
                     source={require('../images/book.png')}
                     style={{
