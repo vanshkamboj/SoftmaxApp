@@ -2,15 +2,13 @@
  * @format
  */
 // import 'react-native-gesture-handler';
-import { AppRegistry } from 'react-native';
+import {AppRegistry} from 'react-native';
 import App from './App';
-import { name as appName } from './app.json';
-import Softmax from './src/App'
-import Home from './src/screens/HomeScreen'
+import {name as appName} from './app.json';
+import Softmax from './src/App';
+import Home from './src/screens/HomeScreen';
 
 AppRegistry.registerComponent(appName, () => Softmax);
-
-
 
 // /**
 //  * Sample React Native App
@@ -31,7 +29,7 @@ AppRegistry.registerComponent(appName, () => Softmax);
 
 // const myJobKey = "Hej";
 
-// // This has to run outside of the component definition since the component is never 
+// // This has to run outside of the component definition since the component is never
 // // instantiated when running in headless mode
 // BackgroundJob.register({
 //     jobKey: myJobKey,
@@ -127,6 +125,3 @@ AppRegistry.registerComponent(appName, () => Softmax);
 // });
 
 // AppRegistry.registerComponent("backtest", () => backtest);
-
-
-
