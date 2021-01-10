@@ -71,7 +71,7 @@ export const signOut = () => {
       });
   };
 };
-export const logInUser = (number, pass) => {
+export const logInUser = (number, pass, navigation) => {
   return dispatch => {
     dispatch({type: LOADING, payload: true});
     fetch(
@@ -96,6 +96,7 @@ export const logInUser = (number, pass) => {
         AsyncStorage.setItem('pass', pass);
         // dispatch({ type: GET_USER_DATA, payload: status })
         dispatch({type: LOADING, payload: false});
+        // return status;
         Actions.Home();
       })
       .catch(error => {

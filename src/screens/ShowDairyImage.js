@@ -50,7 +50,7 @@ class ShowDairyPics extends Component {
     BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
   }
   onBackPress = () => {
-    Actions.Dairy();
+    this.props.navigation.goBack();
     return true;
   };
   state = {
@@ -93,9 +93,9 @@ class ShowDairyPics extends Component {
               margin: 10,
               alignItems: 'center',
             }}>
-            <Text style={{color: 'white', fontSize: 20}}>Dairy Images</Text>
+            <Text style={{color: 'white', fontSize: 20}}>Diary Images</Text>
             <TouchableOpacity
-              onPress={() => Actions.Dairy()}
+              onPress={() => this.props.navigation.goBack()}
               style={{
                 position: 'absolute',
                 left: 10,
