@@ -12,6 +12,7 @@ import {
   Image,
   Alert,
   ActivityIndicator,
+  Linking,
 } from 'react-native';
 import changeNavigationBarColor, {
   hideNavigationBar,
@@ -25,12 +26,15 @@ import Loading from '../components/loading';
 import TextTicker from 'react-native-text-ticker';
 import OptionsMenu from 'react-native-options-menu';
 import AsyncStorage from '@react-native-community/async-storage';
+import VersionCheck from 'react-native-version-check';
+
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
 const MoreIcon = require('../images/options.png');
 
 class DeshBoard extends Component {
   componentDidMount() {
+    this.checkUpdateNeeded();
     changeNavigationBarColor('#2a017d');
     // this.props.otpChanged(null)
     if (this.props.userArr == null) {
@@ -55,6 +59,29 @@ class DeshBoard extends Component {
       new Date().getTime(),
     );
   }
+
+  checkUpdateNeeded = async () => {
+    console.log('here');
+    let updateNeeded = await VersionCheck.needUpdate();
+    console.log({updateNeeded});
+    if (updateNeeded && updateNeeded.isNeeded) {
+      //Alert the user and direct to the app url
+      Alert.alert(
+        'Please Update',
+        'You will have to update your app to the latest version to continue using.',
+        [
+          {
+            text: 'Update',
+            onPress: () => {
+              BackHandler.exitApp();
+              Linking.openURL(updateNeeded.storeUrl);
+            },
+          },
+        ],
+      );
+    }
+  };
+
   logOutUser = () => {
     Alert.alert(
       'Logout User',

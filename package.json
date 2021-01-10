@@ -35,6 +35,7 @@
     "react-native-splash-screen": "^3.2.0",
     "react-native-text-ticker": "^1.0.0",
     "react-native-vector-icons": "^6.6.0",
+    "react-native-version-check": "^3.4.2",
     "react-native-webview": "^5.12.1",
     "react-native-youtube": "^2.0.1",
     "react-redux": "^7.2.0",
